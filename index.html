@@ -94,10 +94,15 @@ section.place{max-width:1080px;margin:0 auto;padding:34px 22px 8px}
 .dcard .meta{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
 .dishes{display:flex;flex-wrap:wrap;gap:5px}
 .dish{font-size:11.5px;background:var(--blu-s);color:#234e7a;border:1px solid #cfe0f1;border-radius:6px;padding:3px 7px;font-weight:600}
+.dish.safe{background:#e2f2ea;color:#1d6b48;border-color:#bfe3cf}
+.dish.avoid{background:#fbe6e2;color:#a3361c;border-color:#f3c4b8}
+.allergy-note{font-size:11px;color:#a3361c;font-weight:700;margin-top:2px}
+.dphoto{height:110px;border-radius:9px 9px 0 0;margin:-14px -14px 10px;background-size:cover;background-position:center}
 .menu-link{align-self:flex-start;margin-top:2px;font-weight:800;font-size:12.5px;color:#fff;background:var(--blue);
   padding:7px 12px;border-radius:8px}
 .menu-link:hover{background:var(--ink)}
 .no-menu{font-size:12px;color:var(--muted);font-weight:600}
+.dish-guide-link{display:inline-block;font-size:11.5px;font-weight:700;color:var(--gold-deep);text-decoration:underline;margin-top:2px}
 
 /* cut styling */
 .cut .photo{filter:grayscale(.85) brightness(.92);opacity:.78}
@@ -108,6 +113,25 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
 .foot-card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;color:#3c4a5a}
 .foot-card b{color:var(--ink)}
 
+@media (max-width:520px){
+  .topbar{padding:8px 12px;gap:8px}
+  .topbar .brand{font-size:13px}
+  .topbar nav{gap:5px}
+  .topbar nav a{font-size:10.5px;padding:5px 9px}
+  .printbtn{font-size:11px;padding:6px 10px}
+  .hero{padding:30px 16px 28px}
+  .hero .sub{font-size:13.5px}
+  .hero .meta{gap:6px}
+  .hero .chip{font-size:11.5px;padding:5px 10px}
+  .legend{padding:0 16px;gap:6px 10px}
+  section.place{padding:26px 16px 6px}
+  .grid{grid-template-columns:1fr;gap:13px}
+  .cut-grid{grid-template-columns:1fr}
+  .photo{height:160px}
+  .card .body{padding:13px 14px 15px}
+  .menu-link{padding:9px 14px;font-size:13px}
+  footer{padding:0 16px}
+}
 @media print{
   .topbar{display:none}
   body{background:#fff}
@@ -136,6 +160,7 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
     <div class="eyebrow">Family trip board · Jul 24 – Aug 2</div>
     <h1>Sintra, the Algarve &amp; <em>Lisbon</em></h1>
     <p class="sub">Everything we considered and where we landed — sights and dinners per place, with photos, live menus, and the reasoning for our group. The picks are set; the <b style="color:#f0d9a6">amber</b> items are the open calls we want your vote on.</p>
+    <p class="sub" style="margin-top:10px;font-size:12.5px">Dish chips: <b style="color:#8fd9b6">green</b> = safe top picks, <b style="color:#f0a48f">red ⚠</b> = contains shrimp/crustacean — flagged for the group's allergy.</p>
     <div class="meta">
       <span class="chip">9 travellers</span>
       <span class="chip">4 adults · grandparent (71) · kids 12 / 10 / 8 / 3</span>
@@ -160,13 +185,13 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
 
       <div class="subhead">Sights &amp; activities</div>
       <div class="grid"><article class="card ">
-    <div class="photo" data-wiki="Pena Palace"><span class="ph-name">Pena Palace</span></div>
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Pena_Palace_Sintra.jpg?width=640')"><span class="ph-name">Pena Palace</span></div>
     <div class="body">
       <div class="row1"><h3>Pena Palace</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="desc">The fairytale red-and-yellow hilltop palace — storybook magic, unreal views.</div>
       <div class="fit">Shuttle up + earliest timed entry so the 71-yo &amp; 3-yo skip the steep climb and the crowds.</div>
     </div></article><article class="card ">
-    <div class="photo" data-wiki="Cascais"><span class="ph-name">Cascais</span></div>
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Cascais_5.JPG?width=640')"><span class="ph-name">Cascais</span></div>
     <div class="body">
       <div class="row1"><h3>Cascais</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="desc">Flat, easy seaside town: promenade, beaches, ice cream.</div>
@@ -209,15 +234,20 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
       <div class="grid"><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Maré – José Avillez</h3><span class="badge b-PICK">PICK</span></div>
+      <div class="dphoto" style="background-image:url('https://marejoseavillez.pt/wp-content/uploads/2022/09/mare_jose_avillez_footer.jpg')"></div>
       <div class="meta">Cascais · Portuguese seafood</div>
       <div class="desc">By José Avillez (Portugal's most celebrated chef); in the Michelin Guide. À la carte, ocean terrace, seats 9 — authentic + casual + non-seafood + real veg.</div>
-      <div class="dishes"><span class="dish">Carabineiro &amp; crab rice</span><span class="dish">Clams Bulhão Pato</span><span class="dish">Charcoal-grilled catch</span><span class="dish">Sirloin / veal</span></div><a class="menu-link" href="https://marejoseavillez.pt/en/" target="_blank" rel="noopener">View menu →</a>
+      <div class="dishes"><span class="dish safe">Lombo de corvina</span><span class="dish safe">Polvo ao alho</span><span class="dish safe">Cod liver escabeche</span><span class="dish avoid">⚠ Carabineiro &amp; crab rice</span><span class="dish avoid">⚠ Scarlet shrimp</span></div>
+      <div class="allergy-note">Shrimp-heavy menu — weak veg, call ahead to request a veg plate.</div>
+      <a class="menu-link" href="https://marejoseavillez.pt/en/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Arola</h3><span class="badge b-BACKUP">BACKUP</span></div>
       <div class="meta">Penha Longa · tapas (on-resort)</div>
       <div class="desc">Sergi Arola's tapas, right at the hotel = zero drive after the red-eye. Kid-friendly.</div>
-      <div class="dishes"><span class="dish">Creative Spanish-Portuguese tapas</span><span class="dish">Shareable small plates</span></div><a class="menu-link" href="https://www.penhalonga.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
+      <div class="dishes"><span class="dish safe">Smoked ham "5J"</span><span class="dish safe">Potato bravas</span><span class="dish safe">Cod buñuelos</span><span class="dish avoid">⚠ Shrimp salad</span><span class="dish avoid">⚠ Lobster rice</span></div>
+      <div class="allergy-note">Explicitly veg/vegan/GF friendly — burrata is a clean veg pick.</div>
+      <a class="menu-link" href="https://www.penhalonga.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
     </div></article></div>
       <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
         <div class="grid cut-grid"><article class="card dcard cut">
@@ -233,19 +263,19 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
 
       <div class="subhead">Sights &amp; activities</div>
       <div class="grid"><article class="card ">
-    <div class="photo" data-wiki="Benagil"><span class="ph-name">Benagil Sea Caves + dolphins</span></div>
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/02-05-2017_Praia_de_Benagil_%282%29.JPG?width=640')"><span class="ph-name">Benagil Sea Caves + dolphins</span></div>
     <div class="body">
       <div class="row1"><h3>Benagil Sea Caves + dolphins</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="desc">The iconic golden cave with the sky-hole, plus summer dolphins — a kid highlight.</div>
       <div class="fit">Whole group on a stable catamaran, or split for a kayak/small boat into the cave. Morning = calm + cool.</div>
     </div></article><article class="card ">
-    <div class="photo" data-wiki="Ponta da Piedade"><span class="ph-name">Ponta da Piedade / Lagos</span></div>
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_da_Piedade_%28Portugal%29_%2849079280062%29.jpg?width=640')"><span class="ph-name">Ponta da Piedade / Lagos</span></div>
     <div class="body">
       <div class="row1"><h3>Ponta da Piedade / Lagos</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="desc">The Algarve's most spectacular cliffs + charming, flat Lagos town.</div>
       <div class="fit">Clifftop is easy for all; the 200-step descent (or a grotto boat) is the split-worthy part.</div>
     </div></article><article class="card ">
-    <div class="photo" data-wiki="Praia da Marinha"><span class="ph-name">Praia da Marinha</span></div>
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Praia_da_Marinha_%282012-09-27%29%2C_by_Klugschnacker_in_Wikipedia_%2886%29.JPG?width=640')"><span class="ph-name">Praia da Marinha</span></div>
     <div class="body">
       <div class="row1"><h3>Praia da Marinha</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="desc">One of Europe's most beautiful beaches; clifftop boardwalk views.</div>
@@ -312,32 +342,40 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
       <div class="grid"><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Rohini by Little Miss India</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="dphoto" style="background-image:url('https://www.pinecliffs.com/wp-content/uploads/2024/11/2024_06_26_Web_Pine-Cliffs_FB-Rohini_Albufeira_DD-11.jpg')"></div>
       <div class="meta">Indian · the veg anchor</div>
-      <div class="desc">Abundant real vegetarian dishes + cultural dinner nights. (Confirming the pop-up runs our dates.)</div>
-      <div class="dishes"><span class="dish">Goan fish curry</span><span class="dish">Tandoori &amp; tikka</span><span class="dish">Paneer + veg curries</span><span class="dish">Biryani</span></div><a class="menu-link" href="https://www.pinecliffs.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
+      <div class="desc">Abundant real vegetarian dishes + cultural dinner nights. ⚠ Site currently shows "closed this week" — confirm it's open for Jul 26 before relying on it.</div>
+      <div class="dishes"><span class="dish safe">Dhaba Murgh (chicken curry)</span><span class="dish safe">Goan fish curry</span><span class="dish safe">Hara Bhara Kebab (veg)</span></div>
+      <div class="allergy-note">Lowest-risk menu on the trip — no shrimp dishes found anywhere.</div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/rohini/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Yakuza by Olivier</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="meta">Japanese</div>
-      <div class="desc">One of the Algarve's top Japanese tables; à la carte, open-air, strong veg.</div>
-      <div class="dishes"><span class="dish">Sushi &amp; sashimi</span><span class="dish">Tempura</span><span class="dish">Gyoza</span><span class="dish">Veg maki &amp; salads</span></div><a class="menu-link" href="https://www.pinecliffs.com/en/dining/yakuza-algarve-by-olivier/" target="_blank" rel="noopener">View menu →</a>
+      <div class="desc">One of the Algarve's top Japanese tables; à la carte, open-air, strong veg. ⚠ Site currently shows "temporarily closed" — confirm before relying on it.</div>
+      <div class="dishes"><span class="dish safe">Kobe's Picanha</span><span class="dish safe">Olivier's steak</span><span class="dish safe">Vegan sushi combo</span><span class="dish avoid">⚠ Any "ebi" (shrimp) roll</span></div>
+      <div class="allergy-note">Plenty of vegan/GF-marked dishes.</div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/yakuza-algarve-by-olivier/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>O Pescador</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="meta">seafood</div>
       <div class="desc">Among the best seafood on the coast; contemporary beach setting.</div>
-      <div class="dishes"><span class="dish">Catch of the day</span><span class="dish">Seafood rice</span><span class="dish">Grilled fish &amp; shellfish</span></div><a class="menu-link" href="https://www.pinecliffs.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
+      <div class="dishes"><span class="dish safe">Tuna tartare</span><span class="dish safe">Grilled catch of the day</span><span class="dish safe">Grilled octopus</span><span class="dish avoid">⚠ Shrimp risotto</span><span class="dish avoid">⚠ Cataplana</span></div>
+      <div class="allergy-note">Weak veg — call ahead and ask for a vegetable plate.</div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/o-pescador/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Maré at Pine Cliffs</h3><span class="badge b-KEPT">KEPT</span></div>
       <div class="meta">casual Portuguese</div>
-      <div class="desc">Beachfront over Falésia — seafood + grilled meats covers the non-seafood eaters.</div>
-      <div class="dishes"><span class="dish">Grilled fish &amp; meats</span><span class="dish">Seafood</span><span class="dish">Salads</span><span class="dish">Sangria</span></div><a class="menu-link" href="https://www.pinecliffs.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
+      <div class="desc">Beachfront over Falésia — seafood + grilled meats covers the non-seafood eaters. ⚠ Hours conflict across sources (may be daytime-only), and one review says it doesn't take reservations — walk-in. Confirm with concierge.</div>
+      <div class="dishes"><span class="dish safe">Grilled salmon</span><span class="dish safe">Frango piri piri</span><span class="dish avoid">⚠ Garlic prawns</span><span class="dish avoid">⚠ Shrimp mayo wrap</span></div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/mare-at-pine-cliffs/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Piri Piri Steak House / repeat favorite</h3><span class="badge b-OPTIONAL">OPTIONAL</span></div>
-      <div class="meta">flex 5th night</div>
-      <div class="desc">The open slot — a meat night, or simply repeat whichever the table loved most. Still your call.</div>
+      <div class="meta">flex 5th night · open Wed–Sat only</div>
+      <div class="desc">The open slot — a meat night, or simply repeat whichever the table loved most. Still your call. Inherently low shrimp-risk (steakhouse).</div>
       <div class="dishes"><span class="dish">Prime grilled meats</span><span class="dish">Piri-piri chicken</span></div><a class="menu-link" href="https://www.pinecliffs.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
     </div></article></div>
       <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
@@ -415,26 +453,33 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
       <div class="grid"><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Bairro do Avillez – Páteo</h3><span class="badge b-PICK">PICK</span></div>
+      <div class="dphoto" style="background-image:url('https://www.bairrodoavillez.pt/wp-content/uploads/2025/10/Pateo_Ameijoas-a-bulhao-pato_05Mar2025_009A8588_credito_GrupoJoseAvillez.jpg')"></div>
       <div class="meta">Chiado · Portuguese (Jul 31)</div>
       <div class="desc">By José Avillez; lively courtyard, à la carte sharing, family-friendly, open nightly, seats 9. A pizzeria + tavern share the roof for the kids/veg.</div>
-      <div class="dishes"><span class="dish">Seafood &amp; fish</span><span class="dish">Presunto &amp; petiscos</span><span class="dish">Meat mains</span><span class="dish">Knockout desserts</span></div><a class="menu-link" href="https://www.bairrodoavillez.pt/en/pateo/" target="_blank" rel="noopener">View menu →</a>
+      <div class="dishes"><span class="dish safe">Ameijoas à Bulhão Pato</span><span class="dish safe">Favinhas com chouriço</span><span class="dish avoid">⚠ Açorda de camarão</span><span class="dish avoid">⚠ Seafood rice (lobster+shrimp)</span></div>
+      <div class="allergy-note">Mushroom Risotto with Basil is the named veg dish.</div>
+      <a class="menu-link" href="https://www.bairrodoavillez.pt/en/pateo/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Ibo</h3><span class="badge b-PICK">PICK</span></div>
       <div class="meta">Cais do Sodré · Mozambican-Goan (Aug 1)</div>
-      <div class="desc">Acclaimed riverfront; many real veg options, capacity 76 (9 is easy), open Saturdays.</div>
-      <div class="dishes"><span class="dish">Crab curry</span><span class="dish">Lamb xacuti</span><span class="dish">Mozambican prawns</span><span class="dish">Coconut fish + veg curries</span></div><a class="menu-link" href="https://www.ibo-restaurante.pt/" target="_blank" rel="noopener">View menu →</a>
+      <div class="desc">Acclaimed riverfront, est. 2008. Confirmed live and active (same-day TheFork bookings, 1,163 reviews at 9.3/10), open Tue–Sun.</div>
+      <div class="dishes"><span class="dish safe">Chacuti de cabrito</span><span class="dish safe">Caril de peixe (coconut fish curry)</span><span class="dish avoid">⚠ Wild prawns "Laurentina"</span><span class="dish avoid">⚠ Tiger prawns piri piri</span></div>
+      <div class="allergy-note">Highest shrimp-density menu of the trip — its most-praised dishes are all shrimp. Flag the allergy when booking. Only 1 vegetarian main — confirm it works.</div>
+      <a class="menu-link" href="https://www.ibo-restaurante.pt/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Prado</h3><span class="badge b-BACKUP">BACKUP</span></div>
       <div class="meta">Mouraria · farm-to-table (Jul 31)</div>
       <div class="desc">Michelin Guide; 'many vegetarian options,' good for groups — the strongest veg of the Portuguese picks.</div>
-      <div class="dishes"><span class="dish">Daily-changing veg plates</span><span class="dish">Day-boat fish</span><span class="dish">Natural wines</span></div><a class="menu-link" href="https://pradorestaurante.com/" target="_blank" rel="noopener">View menu →</a>
+      <div class="dishes"><span class="dish safe">Mirandesa beef tartare</span><span class="dish safe">Iberico pork tenderloin</span><span class="dish safe">Hispi cabbage (veg)</span></div>
+      <div class="allergy-note">No shrimp found anywhere in the menu — lowest-risk restaurant on the trip.</div>
+      <a class="menu-link" href="https://pradorestaurante.com/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
       <div class="row1"><h3>Sabores de Goa</h3><span class="badge b-BACKUP">BACKUP</span></div>
       <div class="meta">Anjos · Goan (Aug 1)</div>
-      <div class="desc">Authentic Goan, proven with groups of 16–20; strong veg + pescatarian.</div>
+      <div class="desc">Authentic Goan, proven with groups of 16–20; strong veg + pescatarian. (Lighter research pass — dish-level allergy detail not yet verified.)</div>
       <div class="dishes"><span class="dish">Vindaloo</span><span class="dish">Xacuti</span><span class="dish">Cafreal</span><span class="dish">Samosas + veg thali</span></div><a class="menu-link" href="https://saboresdegoa.com/en/" target="_blank" rel="noopener">View menu →</a>
     </div></article><article class="card dcard ">
     <div class="body">
