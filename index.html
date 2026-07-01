@@ -525,8 +525,7 @@ footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);
       if(!r.ok){throw 0;} return r.json();
     }).then(function(d){
       var src=d.thumbnail&&d.thumbnail.source;
-      if(src){src=src.replace(/\/\d+px-/,'/640px-');}
-      else if(d.originalimage&&d.originalimage.source){src=d.originalimage.source;}
+      if(!src&&d.originalimage&&d.originalimage.source){src=d.originalimage.source;}
       if(!src){return;}
       var img=new Image();
       img.onload=function(){el.style.backgroundImage='linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url("'+src+'")';el.className+=' has-photo';};
