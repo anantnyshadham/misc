@@ -178,8 +178,7 @@ const OPEN = {
   sagres:       {label:"Add Cabo de São Vicente / Sagres", type:"open"},
   albufeira:    {label:"Swap evening: Albufeira Old Town", type:"open"},
   fifth_dinner: {label:"5th Algarve dinner: Piri Piri Steak House", type:"open"},
-  bairro:       {label:"Jul 31 dinner: Bairro do Avillez", type:"open"},
-  prado:        {label:"Jul 31 dinner: Prado (strongest veg)", type:"open"},
+  zoomarine:    {label:"Jul 28 alt: Zoomarine day (drops the resort day)", type:"open"},
   parque:       {label:"Add Parque das Nações (by Oceanário)", type:"open"},
   belem_tower:  {label:"Climb inside Belém Tower", type:"open"},
 };
@@ -199,16 +198,16 @@ const DAYS = [
   ]},
   {id:"d3", date:"Mon Jul 27", loc:"Algarve", slots:[
     {tag:"Morning", kind:"locked", text:"<b>Benagil Sea Caves</b> + dolphins, boat tour"},
-    {tag:"Afternoon", kind:"locked", text:"Beach / pool, Pine Cliffs"},
+    {tag:"Afternoon", kind:"locked", text:"Beach / pool, Pine Cliffs (~4\u20135h resort time)"},
     {tag:"Dinner", kind:"locked", text:"<b>Yakuza</b> by Olivier (Pine Cliffs)"},
   ]},
   {id:"d4", date:"Tue Jul 28", loc:"Algarve", slots:[
-    {tag:"All day", kind:"locked", text:"Full beach / pool day, no outing — the rest day"},
+    {tag:"All day", kind:"open", accepts:["zoomarine"], lockedAlt:"Full beach/pool resort day (default) — the trip's only long resort block (~10h)"},
     {tag:"Dinner", kind:"locked", text:"<b>O Pescador</b> (Pine Cliffs)"},
   ]},
   {id:"d5", date:"Wed Jul 29", loc:"Algarve", slots:[
     {tag:"Morning", kind:"locked", text:"<b>Silves Castle</b> + river town"},
-    {tag:"Afternoon", kind:"locked", text:"Beach / pool, Pine Cliffs"},
+    {tag:"Afternoon", kind:"locked", text:"Beach / pool, Pine Cliffs (~5h resort time)"},
     {tag:"Dinner", kind:"locked", text:"<b>Maré at Pine Cliffs</b> (casual Portuguese)"},
   ]},
   {id:"d6", date:"Thu Jul 30", loc:"Algarve — west day", slots:[
@@ -220,7 +219,7 @@ const DAYS = [
   {id:"d7", date:"Fri Jul 31", loc:"Algarve → Lisbon", slots:[
     {tag:"Morning", kind:"locked", text:"Drive to Lisbon (Marriott)"},
     {tag:"Afternoon", kind:"locked", text:"<b>Castelo de São Jorge</b> + Alfama — tuk-tuk up (part of the fun, only way in). Own cars for everything else."},
-    {tag:"Dinner", kind:"open", accepts:["bairro","prado"]},
+    {tag:"Dinner", kind:"locked", text:"<b>Evening food tour</b> (Chiado/Alfama, ~5–9pm) — replaces a restaurant dinner tonight"},
   ]},
   {id:"d8", date:"Sat Aug 1", loc:"Lisbon", slots:[
     {tag:"Morning", kind:"locked", text:"<b>Oceanário de Lisboa</b>"},
