@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portugal 2026 · Trip Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15355e; --blue:#2f6fb0; --blue-deep:#10294a;
+  --gold:#cf9a3c; --gold-deep:#a9761f;
+  --paper:#f3eee3; --card:#ffffff; --line:#e6ddca; --muted:#6c7b8d;
+  --green:#1d8257; --green-s:#e2f2ea;
+  --amber:#b3781f; --amber-s:#f8edd2;
+  --red:#a8514f; --red-s:#f1e2e1;
+  --blu:#2c6baa; --blu-s:#e0ebf6;
+  --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 7c4 0 6 4 6 8 4 0 8 2 8 7s-4 7-8 7c0 4-2 8-6 8s-6-4-6-8c-4 0-8-2-8-7s4-7 8-7c0-4 2-8 6-8z' fill='none' stroke='%23ffffff' stroke-width='1.1' opacity='0.18'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Mulish",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;
+  padding:10px 20px;background:rgba(243,238,227,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line)}
+.topbar .brand{font-family:"Fraunces";font-weight:700;font-size:15px;color:var(--ink);letter-spacing:.2px}
+.topbar nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.topbar nav a{font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:#fff}
+.topbar nav a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.printbtn{font:inherit;font-weight:700;font-size:12px;cursor:pointer;color:#fff;background:var(--gold-deep);
+  border:none;padding:7px 13px;border-radius:999px}
+.printbtn:hover{background:var(--ink)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue-deep),var(--ink) 55%,#1c4a7d);
+  color:#fff;padding:46px 22px 40px}
+.hero::after{content:"";position:absolute;inset:0;background-image:var(--tile);background-size:44px 44px;pointer-events:none}
+.hero .wrap{position:relative;max-width:1080px;margin:0 auto}
+.hero .eyebrow{font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--gold)}
+.hero h1{font-family:"Fraunces";font-weight:600;font-size:clamp(30px,5vw,50px);line-height:1.02;margin:.28em 0 .12em}
+.hero h1 em{font-style:italic;color:#f0d9a6}
+.hero .sub{font-size:15px;color:#d8e6f4;max-width:680px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  padding:6px 12px;font-size:12.5px;font-weight:600;color:#eaf2fb}
+
+/* legend */
+.legend{max-width:1080px;margin:18px auto 0;padding:0 22px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.legend .lab{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.badge{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 9px;border-radius:6px;border:1px solid transparent;white-space:nowrap}
+.b-PICK,.b-KEPT{color:var(--green);background:var(--green-s);border-color:#bfe3d0}
+.b-BACKUP,.b-FOLD-IN{color:var(--blu);background:var(--blu-s);border-color:#c4dbf0}
+.b-OPTIONAL,.b-PARTIAL{color:var(--amber);background:var(--amber-s);border-color:#eccf8f}
+.b-CUT{color:var(--red);background:var(--red-s);border-color:#e3c5c4}
+
+/* section */
+section.place{max-width:1080px;margin:0 auto;padding:34px 22px 8px}
+.place-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.place-head .num{font-family:"Fraunces";font-weight:600;font-size:18px;color:var(--gold-deep)}
+.place-head h2{font-family:"Fraunces";font-weight:600;font-size:clamp(24px,3.4vw,34px);margin:0;letter-spacing:.2px}
+.timebudget{margin:12px 0 4px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);
+  border-radius:8px;padding:10px 14px;font-size:13.5px;color:#3c4a5a}
+.timebudget b{color:var(--ink)}
+.subhead{font-family:"Fraunces";font-weight:600;font-size:18px;margin:26px 0 4px;color:var(--ink)}
+.subhead .s{font-family:"Mulish";font-weight:700;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-left:8px}
+
+/* grids */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));margin-top:14px}
+.cut-grid{grid-template-columns:repeat(auto-fill,minmax(232px,1fr))}
+
+/* sight card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:13px;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:0 1px 0 rgba(21,53,94,.04)}
+.photo{height:150px;background:linear-gradient(135deg,#21456f,#356a9c 60%,var(--gold));
+  background-size:cover;background-position:center;position:relative}
+.photo .ph-name{position:absolute;left:10px;bottom:8px;right:10px;color:#fff;font-family:"Fraunces";
+  font-weight:600;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.5);opacity:.9}
+.photo.has-photo .ph-name{display:none}
+.card .body{padding:12px 13px 14px;display:flex;flex-direction:column;gap:7px;flex:1}
+.card .row1{display:flex;align-items:flex-start;gap:8px;justify-content:space-between}
+.card h3{font-family:"Fraunces";font-weight:600;font-size:16.5px;margin:0;line-height:1.12}
+.card .desc{font-size:13px;color:#33414f}
+.card .fit{font-size:12.5px;color:#4a5868;background:#f7f3ea;border-radius:7px;padding:7px 9px;border:1px solid #eee3cc}
+.card .fit b{color:var(--ink)}
+
+/* dining card */
+.dcard .meta{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.dishes{display:flex;flex-wrap:wrap;gap:5px}
+.dish{font-size:11.5px;background:var(--blu-s);color:#234e7a;border:1px solid #cfe0f1;border-radius:6px;padding:3px 7px;font-weight:600}
+.dish.safe{background:#e2f2ea;color:#1d6b48;border-color:#bfe3cf}
+.dish.avoid{background:#fbe6e2;color:#a3361c;border-color:#f3c4b8}
+.allergy-note{font-size:11px;color:#a3361c;font-weight:700;margin-top:2px}
+.dphoto{height:110px;border-radius:9px 9px 0 0;margin:-14px -14px 10px;background-size:cover;background-position:center}
+.menu-link{align-self:flex-start;margin-top:2px;font-weight:800;font-size:12.5px;color:#fff;background:var(--blue);
+  padding:7px 12px;border-radius:8px}
+.menu-link:hover{background:var(--ink)}
+.no-menu{font-size:12px;color:var(--muted);font-weight:600}
+.dish-guide-link{display:inline-block;font-size:11.5px;font-weight:700;color:var(--gold-deep);text-decoration:underline;margin-top:2px}
+
+/* cut styling */
+.cut .photo{filter:grayscale(.85) brightness(.92);opacity:.78}
+.cut h3{color:#5a6675}
+.cut{opacity:.92}
+
+footer{max-width:1080px;margin:30px auto 60px;padding:0 22px;color:var(--muted);font-size:13px}
+.foot-card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;color:#3c4a5a}
+.foot-card b{color:var(--ink)}
+
+@media (max-width:520px){
+  .topbar{padding:8px 12px;gap:8px}
+  .topbar .brand{font-size:13px}
+  .topbar nav{gap:5px}
+  .topbar nav a{font-size:10.5px;padding:5px 9px}
+  .printbtn{font-size:11px;padding:6px 10px}
+  .hero{padding:30px 16px 28px}
+  .hero .sub{font-size:13.5px}
+  .hero .meta{gap:6px}
+  .hero .chip{font-size:11.5px;padding:5px 10px}
+  .legend{padding:0 16px;gap:6px 10px}
+  section.place{padding:26px 16px 6px}
+  .grid{grid-template-columns:1fr;gap:13px}
+  .cut-grid{grid-template-columns:1fr}
+  .photo{height:160px}
+  .card .body{padding:13px 14px 15px}
+  .menu-link{padding:9px 14px;font-size:13px}
+  footer{padding:0 16px}
+}
+@media print{
+  .topbar{display:none}
+  body{background:#fff}
+  .hero{padding:24px 18px}
+  section.place{padding-top:18px}
+  .card,.timebudget,.foot-card{break-inside:avoid}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">Portugal 2026</span>
+  <nav>
+    <a href="#sintra">Sintra</a>
+    <a href="#algarve">Algarve</a>
+    <a href="#lisbon">Lisbon</a>
+  </nav>
+  <button class="printbtn" onclick="window.print()">Save as PDF</button>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Family trip board · Jul 24 – Aug 2</div>
+    <h1>Sintra, the Algarve &amp; <em>Lisbon</em></h1>
+    <p class="sub">Everything we considered and where we landed — sights and dinners per place, with photos, live menus, and the reasoning for our group. The picks are set; the <b style="color:#f0d9a6">amber</b> items are the open calls we want your vote on.</p>
+    <p class="sub" style="margin-top:10px;font-size:12.5px">Dish chips: <b style="color:#8fd9b6">green</b> = safe top picks, <b style="color:#f0a48f">red ⚠</b> = contains shrimp/crustacean — flagged for the group's allergy.</p>
+    <div class="meta">
+      <span class="chip">9 travellers</span>
+      <span class="chip">4 adults · grandparent (71) · kids 12 / 10 / 8 / 3</span>
+      <span class="chip">2 rental cars · Jul 25–Aug 2</span>
+      <span class="chip">Dinners ~7pm · à la carte</span>
+    </div>
+  </div>
+</header>
+
+<div class="legend">
+  <span class="lab">Key</span>
+  <span class="badge b-PICK">Pick / Kept</span>
+  <span class="badge b-BACKUP">Backup / Fold-in</span>
+  <span class="badge b-OPTIONAL">Optional — your call</span>
+  <span class="badge b-CUT">Considered &amp; cut</span>
+</div>
+
+<main id="app">
+<section class="place" id="sintra">
+      <div class="place-head"><span class="num">I</span><h2>Sintra</h2></div>
+      <div class="timebudget"><b>Time budget:</b> two full days — Jul 25 PM (Monserrate + Regaleira, tickets booked) and Jul 26 AM (Pena guided 10:30 + Moorish Castle + National Palace self-guided). Depart for Algarve ~2:45pm Jul 26.</div>
+
+      <div class="subhead">Sights &amp; activities</div>
+      <div class="grid"><article class="card ">
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Pena_Palace_Sintra.jpg?width=640')"><span class="ph-name">Pena Palace</span></div>
+    <div class="body">
+      <div class="row1"><h3>Pena Palace</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">The fairytale red-and-yellow hilltop palace — storybook magic, unreal views.</div>
+      <div class="fit">Jul 26, guided visit, 10:30am — ticket booked. Shuttle up so the 71-yo &amp; 3-yo skip the climb.</div>
+    </div></article><article class="card ">
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Cascais_5.JPG?width=640')"><span class="ph-name">Cascais</span></div>
+    <div class="body">
+      <div class="row1"><h3>Cascais</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Flat, easy seaside town: promenade, beaches, ice cream.</div>
+      <div class="fit">Jul 25 evening, trimmed to ~1h15 to fit Monserrate + Regaleira earlier that day. Right by the Maré dinner.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Quinta da Regaleira"><span class="ph-name">Quinta da Regaleira</span></div>
+    <div class="body">
+      <div class="row1"><h3>Quinta da Regaleira</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Initiation well, tunnels, grottoes and towers — catnip for the 8/10/12s.</div>
+      <div class="fit">Jul 25, ~4:05–5:35pm, timed entry booked. One adult stays directly behind the 3-yo on the well stairs; grandparent can skip the deepest tunnels.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Sintra National Palace"><span class="ph-name">Sintra National Palace</span></div>
+    <div class="body">
+      <div class="row1"><h3>Sintra National Palace</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">The twin-cone palace in town — the flattest, most accessible of the three.</div>
+      <div class="fit">Jul 26, ~1:45–2:30pm, self-guided with the free audioguide app — flat, good breather after Pena's hill.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Castle of the Moors"><span class="ph-name">Moorish Castle</span></div>
+    <div class="body">
+      <div class="row1"><h3>Moorish Castle</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Ridge-top ramparts with huge views.</div>
+      <div class="fit">Jul 26, right after Pena (~11:45am–12:15pm) — same hillside, same shuttle, no extra trip up.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Monserrate Palace"><span class="ph-name">Monserrate Palace</span></div>
+    <div class="body">
+      <div class="row1"><h3>Monserrate Palace</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Romantic palace + exotic gardens.</div>
+      <div class="fit">Jul 25, ~2:15–3:45pm, right after Arola lunch. Ticket booked.</div>
+    </div></article></div>
+      <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
+        <div class="grid cut-grid"><article class="card cut">
+    <div class="photo" data-wiki="Cabo da Roca"><span class="ph-name">Cabo da Roca</span></div>
+    <div class="body">
+      <div class="row1"><h3>Cabo da Roca</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">The westernmost point of mainland Europe.</div>
+      <div class="fit">Adds a drive — save it for another trip.</div>
+    </div></article></div>
+
+      <div class="subhead">Dining <span class="s">Sintra / Cascais — 1 dinner (Sat Jul 25)</span></div>
+      <div class="grid"><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Maré – José Avillez</h3><span class="badge b-PICK">PICK</span></div>
+      <div class="dphoto" style="background-image:url('https://marejoseavillez.pt/wp-content/uploads/2022/09/mare_jose_avillez_footer.jpg')"></div>
+      <div class="meta">Cascais · Portuguese seafood</div>
+      <div class="desc">By José Avillez (Portugal's most celebrated chef); in the Michelin Guide. À la carte, ocean terrace, seats 9 — authentic + casual + non-seafood + real veg.</div>
+      <div class="dishes"><span class="dish safe">Lombo de corvina</span><span class="dish safe">Polvo ao alho</span><span class="dish safe">Cod liver escabeche</span><span class="dish avoid">⚠ Carabineiro &amp; crab rice</span><span class="dish avoid">⚠ Scarlet shrimp</span></div>
+      <div class="allergy-note">Shrimp-heavy menu — weak veg, call ahead to request a veg plate.</div>
+      <a class="menu-link" href="https://marejoseavillez.pt/en/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Arola</h3><span class="badge b-BACKUP">BACKUP</span></div>
+      <div class="meta">Penha Longa · tapas (on-resort)</div>
+      <div class="desc">Sergi Arola's tapas, right at the hotel = zero drive after the red-eye. Kid-friendly.</div>
+      <div class="dishes"><span class="dish safe">Smoked ham "5J"</span><span class="dish safe">Potato bravas</span><span class="dish safe">Cod buñuelos</span><span class="dish avoid">⚠ Shrimp salad</span><span class="dish avoid">⚠ Lobster rice</span></div>
+      <div class="allergy-note">Explicitly veg/vegan/GF friendly — burrata is a clean veg pick.</div>
+      <a class="menu-link" href="https://www.penhalonga.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
+    </div></article></div>
+      <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
+        <div class="grid cut-grid"><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Midori</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">Penha Longa · Japanese (1★)</div>
+      <div class="desc">Now tasting-only (7-course €154 / 9-course €186), 6 tables — breaks à la carte + the budget + 'no 3–4hr sittings.'</div>
+      
+    </div></article></div>
+    </section><section class="place" id="algarve">
+      <div class="place-head"><span class="num">II</span><h2>Algarve</h2></div>
+      <div class="timebudget"><b>Time budget:</b> 5 days. Resort time by day: Jul 26 ~0–1h (Pena + drive; ~3h if Regaleira skipped) · Jul 27 ~4–5h PM · <b>Jul 28 ~10h — the only full resort day</b> · Jul 29 ~5h PM · Jul 30 ~2–3h late PM · Jul 31 zero (checkout). Jul 28 alone is nearly half the trip's total resort time — that's the cost of swapping it for Zoomarine.</div>
+
+      <div class="subhead">Sights &amp; activities</div>
+      <div class="grid"><article class="card ">
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/02-05-2017_Praia_de_Benagil_%282%29.JPG?width=640')"><span class="ph-name">Benagil Sea Caves + dolphins</span></div>
+    <div class="body">
+      <div class="row1"><h3>Benagil Sea Caves + dolphins</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">The iconic golden cave with the sky-hole, plus summer dolphins — a kid highlight.</div>
+      <div class="fit">Booked: Tue Jul 28, 2:30–4:30pm — private tour (Seacret Tours, Albufeira Marina), whole group together, not split.</div>
+    </div></article><article class="card ">
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_da_Piedade_%28Portugal%29_%2849079280062%29.jpg?width=640')"><span class="ph-name">Ponta da Piedade / Lagos</span></div>
+    <div class="body">
+      <div class="row1"><h3>Ponta da Piedade / Lagos</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">The Algarve's most spectacular cliffs + charming, flat Lagos town.</div>
+      <div class="fit">Wed Jul 29 morning. Clifftop is easy for all; the 200-step descent (or a grotto boat) is the split-worthy part.</div>
+    </div></article><article class="card ">
+    <div class="photo has-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Praia_da_Marinha_%282012-09-27%29%2C_by_Klugschnacker_in_Wikipedia_%2886%29.JPG?width=640')"><span class="ph-name">Praia da Marinha</span></div>
+    <div class="body">
+      <div class="row1"><h3>Praia da Marinha</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">One of Europe's most beautiful beaches; clifftop boardwalk views.</div>
+      <div class="fit">Never found a day that fit — orphaned from the Benagil boat (compressed to a 2:30–4:30pm slot), then geographically incompatible with the Olhão/Ria Formosa day (opposite direction). Genuinely still worth doing if a slot opens up.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Olhão"><span class="ph-name">Olhão</span></div>
+    <div class="body">
+      <div class="row1"><h3>Olhão</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Working fishing town, distinctive cubist Moorish architecture — called "the most authentic town in the Algarve" by multiple sources. Real market, real fishing port, not polished for tourists.</div>
+      <div class="fit">Thu Jul 30 morning + lunch. The actual answer to "real essence of the area" — replaces Silves (see cut note).</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Ria Formosa"><span class="ph-name">Ria Formosa</span></div>
+    <div class="body">
+      <div class="row1"><h3>Ria Formosa</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Real coastal wetland/lagoon nature reserve — calm, sheltered water, genuinely different from Benagil's open-Atlantic caves.</div>
+      <div class="fit">Thu Jul 30 afternoon, private boat 2–4h from the same Olhão waterfront. ⚠ NOT BOOKED — book on Viator (ODYSSEY 231 reviews or Sabino private, 33/28 reviews).</div>
+    </div></article><article class="card cut">
+    <div class="photo" data-wiki="Castle of Silves"><span class="ph-name">Silves Castle</span></div>
+    <div class="body">
+      <div class="row1"><h3>Silves Castle</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">Red-sandstone Moorish castle over a sleepy river town.</div>
+      <div class="fit">Real overlap with Moorish Castle already done in Sintra — same "walk the ramparts" experience. Replaced by Olhão, which delivers actual regional character instead.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Vilamoura"><span class="ph-name">Vilamoura marina</span></div>
+    <div class="body">
+      <div class="row1"><h3>Vilamoura marina</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Flat promenade, boats, gelato — an easy all-ages evening.</div>
+      <div class="fit">Low-effort; pairs with a beach/pool day.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Praia da Falésia"><span class="ph-name">Pine Cliffs beach &amp; pools</span></div>
+    <div class="body">
+      <div class="row1"><h3>Pine Cliffs beach &amp; pools</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">The resort itself: cliff-top pools, km of golden-cliff beach, Porto Pirata kids' village.</div>
+      <div class="fit">The backbone of the Algarve leg — chill days, kids' club, no driving.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Cape St. Vincent"><span class="ph-name">Cabo de São Vicente / Sagres</span></div>
+    <div class="body">
+      <div class="row1"><h3>Cabo de São Vicente / Sagres</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">The southwest tip of Europe — dramatic 'end of the world' cliffs + lighthouse.</div>
+      <div class="fit">Wed Jul 29, ~2:35–3:15pm, right after Lagos. Quick viewpoint stop, not a long stay — keeps the 71-yo and 3-yo comfortable.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Albufeira"><span class="ph-name">Albufeira Old Town</span></div>
+    <div class="body">
+      <div class="row1"><h3>Albufeira Old Town</h3><span class="badge b-OPTIONAL">OPTIONAL</span></div>
+      <div class="desc">Lively, touristy old-town evening.</div>
+      <div class="fit">A fun alternative to Vilamoura for the easy evening.</div>
+    </div></article></div>
+      <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
+        <div class="grid cut-grid"><article class="card cut">
+    <div class="photo" data-wiki="Faro"><span class="ph-name">Faro old town</span></div>
+    <div class="body">
+      <div class="row1"><h3>Faro old town</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">Walled cathedral city.</div>
+      <div class="fit">Pleasant, but less compelling than the cliffs/castle for limited slots.</div>
+    </div></article><article class="card cut">
+    <div class="photo" data-wiki="Tavira"><span class="ph-name">Tavira</span></div>
+    <div class="body">
+      <div class="row1"><h3>Tavira</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">Pretty river town, eastern Algarve.</div>
+      <div class="fit">Too far east for our days.</div>
+    </div></article><article class="card cut">
+    <div class="photo" data-wiki="Zoomarine Algarve"><span class="ph-name">Zoomarine</span></div>
+    <div class="body">
+      <div class="row1"><h3>Zoomarine</h3><span class="badge b-OPTIONAL">OPTIONAL</span></div>
+      <div class="desc">Marine theme park — sister's pick, now the official alternative for Jul 28.</div>
+      <div class="fit">The trade: taking it costs the trip's only full resort day (~10h → ~1h). Family vote.</div>
+    </div></article><article class="card cut">
+    <div class="photo" ><span class="ph-name">Water parks</span></div>
+    <div class="body">
+      <div class="row1"><h3>Water parks</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">Aquashow / Slide &amp; Splash.</div>
+      <div class="fit">Same logic — not uniquely Portuguese; protects the beach/pool balance.</div>
+    </div></article></div>
+
+      <div class="subhead">Dining <span class="s">Algarve — 5 dinners (Sun–Thu Jul 26–30), all on-resort at Pine Cliffs</span></div>
+      <div class="grid"><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Rohini by Little Miss India</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="dphoto" style="background-image:url('https://www.pinecliffs.com/wp-content/uploads/2024/11/2024_06_26_Web_Pine-Cliffs_FB-Rohini_Albufeira_DD-11.jpg')"></div>
+      <div class="meta">Indian · the veg anchor</div>
+      <div class="desc">Abundant real vegetarian dishes + cultural dinner nights. Confirmed operating. Jul 28, pre-booked, 8pm requested — ⚠ not yet confirmed (card guarantee outstanding, follow-up sent).</div>
+      <div class="dishes"><span class="dish safe">Dhaba Murgh (chicken curry)</span><span class="dish safe">Goan fish curry</span><span class="dish safe">Hara Bhara Kebab (veg)</span></div>
+      <div class="allergy-note">Lowest-risk menu on the trip — no shrimp dishes found anywhere.</div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/rohini/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Yakuza by Olivier</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="meta">Japanese</div>
+      <div class="desc">One of the Algarve's top Japanese tables; à la carte, open-air, strong veg. Jul 30, 8pm — ✓ CONFIRMED via TheFork, 9 people, allergy noted.</div>
+      <div class="dishes"><span class="dish safe">Kobe's Picanha</span><span class="dish safe">Olivier's steak</span><span class="dish safe">Vegan sushi combo</span><span class="dish avoid">⚠ Any "ebi" (shrimp) roll</span></div>
+      <div class="allergy-note">Plenty of vegan/GF-marked dishes.</div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/yakuza-algarve-by-olivier/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>O Pescador</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="meta">seafood</div>
+      <div class="desc">Among the best seafood on the coast; contemporary beach setting. Jul 26, pre-booked, 8pm requested — ⚠ not yet confirmed (card guarantee outstanding).</div>
+      <div class="dishes"><span class="dish safe">Tuna tartare</span><span class="dish safe">Grilled catch of the day</span><span class="dish safe">Grilled octopus</span><span class="dish avoid">⚠ Shrimp risotto</span><span class="dish avoid">⚠ Cataplana</span></div>
+      <div class="allergy-note">Weak veg — call ahead and ask for a vegetable plate.</div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/o-pescador/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Maré at Pine Cliffs</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="meta">casual Portuguese</div>
+      <div class="desc">Beachfront over Falésia — seafood + grilled meats covers the non-seafood eaters. Jul 27, pre-booked, 8pm requested — ⚠ not yet confirmed (card guarantee outstanding).</div>
+      <div class="dishes"><span class="dish safe">Grilled salmon</span><span class="dish safe">Frango piri piri</span><span class="dish avoid">⚠ Garlic prawns</span><span class="dish avoid">⚠ Shrimp mayo wrap</span></div>
+      <a class="menu-link" href="https://www.pinecliffs.com/en/dining/mare-at-pine-cliffs/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Piri Piri Steak House</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="meta">Jul 29 · open Wed–Sat only</div>
+      <div class="desc">Meat night, low shrimp-risk (steakhouse). Jul 29, pre-booked, 8pm requested — ⚠ not yet confirmed (card guarantee outstanding).</div>
+      <div class="dishes"><span class="dish">Prime grilled meats</span><span class="dish">Piri-piri chicken</span></div><a class="menu-link" href="https://www.pinecliffs.com/en/dining/" target="_blank" rel="noopener">View menu →</a>
+    </div></article></div>
+      <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
+        <div class="grid cut-grid"><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Portofino by MIMO</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">Italian — was the concierge's Jul 30 suggestion</div>
+      <div class="desc">Only offered because Piri Piri was closed that date. Italian breaks the authentic-Portuguese/high-end-ethnic brief, and zero allergy research was done on it. Yakuza (confirmed) replaces it — cancellation sent to concierge, not yet confirmed released.</div>
+    </div></article><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Olhos de Água walkables</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">village seafood</div>
+      <div class="desc">La Cigale / O Manuel / Passaro Azul — genuinely authentic, but the vegetarian is left with lasagne/pizza/salad. Stayed on-resort for the veg + no night driving with the 3-yo.</div>
+      
+    </div></article><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Vila Joya / Ocean / Gusto</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">Algarve fine dining</div>
+      <div class="desc">World-class but formal tasting menus (and Gusto is Italian-western) — break the casual + à la carte + budget rules.</div>
+      
+    </div></article></div>
+    </section><section class="place" id="lisbon">
+      <div class="place-head"><span class="num">III</span><h2>Lisbon</h2></div>
+      <div class="timebudget"><b>Time budget:</b> ~1.5 days — Jul 31 PM (half-day after the drive) + Aug 1 (full day). Aug 2 is departure only.</div>
+
+      <div class="subhead">Sights &amp; activities</div>
+      <div class="grid"><article class="card ">
+    <div class="photo" data-wiki="Lisbon Oceanarium"><span class="ph-name">Oceanário de Lisboa</span></div>
+    <div class="body">
+      <div class="row1"><h3>Oceanário de Lisboa</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">World-class aquarium — giant tank, otters, penguins; flat, indoor, air-conditioned.</div>
+      <div class="fit">The best all-ages, beat-the-heat activity — the 3-yo and the 71-yo both win.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Jerónimos Monastery"><span class="ph-name">Belém: Jerónimos + Tower + tarts</span></div>
+    <div class="body">
+      <div class="row1"><h3>Belém: Jerónimos + Tower + tarts</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Flat riverside icons + the original Pastéis de Belém custard tarts.</div>
+      <div class="fit">Book Jerónimos ahead; photograph the Tower from the gardens and skip its narrow interior climb.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="São Jorge Castle"><span class="ph-name">Castelo de São Jorge + Alfama</span></div>
+    <div class="body">
+      <div class="row1"><h3>Castelo de São Jorge + Alfama</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Panoramic hilltop castle over the old quarter.</div>
+      <div class="fit">Tuk-tuk up through Alfama — the ride is part of the fun, and it's the only real way in: the lanes are too steep/narrow to self-drive or park near. Everything else in Lisbon is self-drive, own cars, car seat included.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Time Out Market"><span class="ph-name">Time Out Market</span></div>
+    <div class="body">
+      <div class="row1"><h3>Time Out Market</h3><span class="badge b-KEPT">KEPT</span></div>
+      <div class="desc">Huge food hall — something for everyone incl. veg + picky kids.</div>
+      <div class="fit">Lunch, not dinner.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Parque das Nações"><span class="ph-name">Parque das Nações</span></div>
+    <div class="body">
+      <div class="row1"><h3>Parque das Nações</h3><span class="badge b-OPTIONAL">OPTIONAL</span></div>
+      <div class="desc">Modern riverside + cable car, right by the Oceanário.</div>
+      <div class="fit">An easy, fun add for the kids.</div>
+    </div></article><article class="card ">
+    <div class="photo" data-wiki="Praça do Comércio"><span class="ph-name">Praça do Comércio / Baixa</span></div>
+    <div class="body">
+      <div class="row1"><h3>Praça do Comércio / Baixa</h3><span class="badge b-FOLD-IN">FOLD-IN</span></div>
+      <div class="desc">Grand riverfront square + the Rua Augusta arch.</div>
+      <div class="fit">A flat stroll — easy to fold into the Belém/center day.</div>
+    </div></article></div>
+      <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
+        <div class="grid cut-grid"><article class="card cut">
+    <div class="photo" data-wiki="Trams in Lisbon"><span class="ph-name">Tram 28</span></div>
+    <div class="body">
+      <div class="row1"><h3>Tram 28</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">The vintage hill tram.</div>
+      <div class="fit">Mobbed, long queues — miserable with a stroller + a group of 9 (your call).</div>
+    </div></article><article class="card cut">
+    <div class="photo" data-wiki="LX Factory"><span class="ph-name">LX Factory</span></div>
+    <div class="body">
+      <div class="row1"><h3>LX Factory</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="desc">Trendy industrial district.</div>
+      <div class="fit">Cool, but no time block.</div>
+    </div></article></div>
+
+      <div class="subhead">Dining <span class="s">Lisbon — Fri Jul 31 evening food tour · Sat Aug 1 Ibo</span></div>
+      <div class="grid"><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Evening Food Tour</h3><span class="badge b-PICK">PICK</span></div>
+      <div class="meta">Chiado/Alfama · ~5–9pm (Jul 31)</div>
+      <div class="desc">Replaces a restaurant dinner on arrival night — orientation + tastings in one, early start fits the kids, and everyone samples widely instead of one menu. Book family-friendly private tour for 9 with the shellfish allergy flagged.</div>
+      <div class="dishes"><span class="dish">Petiscos crawl</span><span class="dish">Pastéis + ginjinha</span><span class="dish">Multiple stops, short walks</span></div>
+      <div class="allergy-note">Confirm with operator: shellfish-free substitutions at every stop.</div>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Bairro do Avillez – Páteo</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="dphoto" style="background-image:url('https://www.bairrodoavillez.pt/wp-content/uploads/2025/10/Pateo_Ameijoas-a-bulhao-pato_05Mar2025_009A8588_credito_GrupoJoseAvillez.jpg')"></div>
+      <div class="meta">Chiado · Portuguese (was Jul 31 pick)</div>
+      <div class="desc">Replaced by the food tour: earliest bookable table was 8:15pm — too late for the kids. Still great if plans change.</div>
+      <div class="dishes"><span class="dish safe">Ameijoas à Bulhão Pato</span><span class="dish safe">Favinhas com chouriço</span><span class="dish avoid">⚠ Açorda de camarão</span><span class="dish avoid">⚠ Seafood rice (lobster+shrimp)</span></div>
+      <div class="allergy-note">Mushroom Risotto with Basil is the named veg dish.</div>
+      <a class="menu-link" href="https://www.bairrodoavillez.pt/en/pateo/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Ibo</h3><span class="badge b-PICK">PICK</span></div>
+      <div class="meta">Cais do Sodré · Mozambican-Goan (Aug 1)</div>
+      <div class="desc">Acclaimed riverfront, est. 2008. Confirmed live and active (same-day TheFork bookings, 1,163 reviews at 9.3/10), open Tue–Sun.</div>
+      <div class="dishes"><span class="dish safe">Chacuti de cabrito</span><span class="dish safe">Caril de peixe (coconut fish curry)</span><span class="dish avoid">⚠ Wild prawns "Laurentina"</span><span class="dish avoid">⚠ Tiger prawns piri piri</span></div>
+      <div class="allergy-note">Highest shrimp-density menu of the trip — its most-praised dishes are all shrimp. Flag the allergy when booking. Only 1 vegetarian main — confirm it works.</div>
+      <a class="menu-link" href="https://www.ibo-restaurante.pt/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Prado</h3><span class="badge b-BACKUP">BACKUP</span></div>
+      <div class="meta">Mouraria · farm-to-table (Jul 31 fallback if food tour unavailable)</div>
+      <div class="desc">Michelin Guide; 'many vegetarian options,' good for groups — the strongest veg of the Portuguese picks.</div>
+      <div class="dishes"><span class="dish safe">Mirandesa beef tartare</span><span class="dish safe">Iberico pork tenderloin</span><span class="dish safe">Hispi cabbage (veg)</span></div>
+      <div class="allergy-note">No shrimp found anywhere in the menu — lowest-risk restaurant on the trip.</div>
+      <a class="menu-link" href="https://pradorestaurante.com/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Sabores de Goa</h3><span class="badge b-BACKUP">BACKUP</span></div>
+      <div class="meta">Anjos · Goan (Aug 1)</div>
+      <div class="desc">Authentic Goan, proven with groups of 16–20; strong veg + pescatarian. (Lighter research pass — dish-level allergy detail not yet verified.)</div>
+      <div class="dishes"><span class="dish">Vindaloo</span><span class="dish">Xacuti</span><span class="dish">Cafreal</span><span class="dish">Samosas + veg thali</span></div><a class="menu-link" href="https://saboresdegoa.com/en/" target="_blank" rel="noopener">View menu →</a>
+    </div></article><article class="card dcard ">
+    <div class="body">
+      <div class="row1"><h3>Zaafran</h3><span class="badge b-BACKUP">BACKUP</span></div>
+      <div class="meta">Saldanha · refined Indian (Aug 1)</div>
+      <div class="desc">Often called Lisbon's best Indian; more elevated, with a vegetarian tasting. Reserve by phone: +351 213 558 894.</div>
+      <div class="dishes"><span class="dish">North Indian curries</span><span class="dish">Veg degustation</span></div><span class="no-menu">No website — see note</span>
+    </div></article></div>
+      <div class="subhead">Considered &amp; cut <span class="s">why we passed</span></div>
+        <div class="grid cut-grid"><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Encanto</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">José Avillez · vegetarian</div>
+      <div class="desc">Fully vegetarian &amp; acclaimed — but tasting-only (~€155) with no kids menu.</div>
+      
+    </div></article><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Cervejaria Ramiro</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">famous seafood</div>
+      <div class="desc">Legendary — but a shellfish temple; poor for a lifelong vegetarian.</div>
+      
+    </div></article><article class="card dcard cut">
+    <div class="body">
+      <div class="row1"><h3>Time Out Market (dinner)</h3><span class="badge b-CUT">CUT</span></div>
+      <div class="meta">food hall</div>
+      <div class="desc">Cut as a dinner — kept for lunch instead.</div>
+      
+    </div></article></div>
+    </section>
+</main>
+
+<footer>
+  <div class="foot-card">
+    <b>How to use this:</b> skim each place, then weigh in on the <span class="badge b-OPTIONAL">Optional</span> items — they're the genuine toss-ups (Sagres, Regaleira, the 5th Algarve dinner, Bairro vs Prado). Hit <b>Save as PDF</b> to keep a copy or screenshot your preferred day. Photos load from Wikipedia; menus open the restaurants' own pages.
+  </div>
+</footer>
+
+<script>
+(function(){
+  function load(el){
+    var t=el.getAttribute('data-wiki'); if(!t){return;}
+    fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(t)).then(function(r){
+      if(!r.ok){throw 0;} return r.json();
+    }).then(function(d){
+      var src=d.thumbnail&&d.thumbnail.source;
+      if(!src&&d.originalimage&&d.originalimage.source){src=d.originalimage.source;}
+      if(!src){return;}
+      var img=new Image();
+      img.onload=function(){el.style.backgroundImage='linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.25)),url("'+src+'")';el.className+=' has-photo';};
+      img.src=src;
+    }).catch(function(){});
+  }
+  var els=document.querySelectorAll('.photo[data-wiki]');
+  for(var i=0;i<els.length;i++){load(els[i]);}
+})();
+</script>
+</body>
+</html>
