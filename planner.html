@@ -64,6 +64,11 @@ main{max-width:760px;margin:0 auto;padding:18px 14px 0}
 .day-head .d{font-family:"Fraunces";font-weight:700;font-size:16px;color:var(--ink)}
 .day-head .loc{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--gold-deep)}
 .day-travel{padding:12px 14px;font-size:13px;color:var(--muted);font-style:italic}
+.day-attire{display:flex;gap:9px;align-items:flex-start;padding:11px 14px;font-size:12.5px;line-height:1.42;
+  color:#5a4623;background:#fdf7ea;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.day-attire .ic{flex:0 0 auto;font-size:14.5px;line-height:1.3;margin-top:-1px}
+.day-attire .txt b{display:block;color:var(--gold-deep);font-weight:800;text-transform:uppercase;
+  font-size:10px;letter-spacing:.08em;margin-bottom:2px}
 
 .slot{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #f1ece0}
 .slot:first-of-type{border-top:none}
@@ -111,6 +116,7 @@ footer.actions button{font:inherit;font-weight:800;font-size:12.5px;cursor:point
   .tray-body{padding:0 12px 11px;max-height:200px}
   .chip{font-size:11.5px;padding:7px 11px}
   .day-head{padding:11px 12px;flex-wrap:wrap;gap:4px 10px}
+  .day-attire{padding:10px 12px}
   .slot{padding:12px;flex-wrap:wrap;row-gap:4px}
   .slot .tag{flex:0 0 auto;order:1;font-size:10px}
   .slot .content{flex:1 1 100%;order:3;font-size:14px;padding-left:0}
@@ -171,25 +177,27 @@ footer.actions button{font:inherit;font-weight:800;font-size:12.5px;cursor:point
 <script>
 // ---- data model ----
 const OPEN = {
-  zoomarine:    {label:"Jul 28 alt: Zoomarine day (drops the resort day)", type:"open"},
   parque:       {label:"Add Parque das Nações (by Oceanário)", type:"open"},
   belem_tower:  {label:"Climb inside Belém Tower", type:"open"},
 };
 
 const DAYS = [
-  {id:"d0", date:"Fri Jul 24", loc:"Depart", travel:"Depart BOS 10:45pm (TAP TP216, redeye to Lisbon)."},
-  {id:"d1", date:"Sat Jul 25", loc:"Sintra / Cascais", slots:[
-    {tag:"Drive", kind:"locked", text:"Airport → Penha Longa: ~40 min. Land 10:20am → conservative arrival ~1:15–1:30pm (incl. immigration/bags/rental car)"},
+  {id:"d0", date:"Fri Jul 24", loc:"Depart", attire:"Layers for TAP's cool cabin overnight — a light hoodie earns its keep more than whatever you'll want on arrival. Slip-on shoes speed up security for a party of 9.", travel:"Depart BOS 10:45pm (TAP TP216, redeye to Lisbon)."},
+  {id:"d1", date:"Sat Jul 25", loc:"Sintra / Cascais", attire:"Sintra runs 5–9°F cooler and mistier than Lisbon even in July — a light layer for Monserrate's gardens earns its keep. Closed-toe shoes for Regaleira's uneven, sometimes-damp well stairs — this is not a sandals stop. <b>No hotel return between check-in lunch and dinner</b> — you're out from Arola straight through Maré at 8pm, so start the day already in whatever you want to wear to dinner (smart-casual works for both); there's no window to change.", slots:[
+    {tag:"Drive", kind:"locked", text:"Airport → Penha Longa: ~40 min. Land 10:20am → conservative arrival ~1:15–1:30pm (incl. immigration/bags/rental car). ✓ RESOLVED: BeRent/DiscoverCars #D014627141, Škoda Superb wagon, 5 seats, paid (€1,009.15), pick-up 11am at Lisbon Airport, drop-off Aug 2 11am same location — this is the main-family car. Sister booked her own rental separately, covering the second car. Bring physical driver's license + passport (digital copies not accepted) + a Visa/Mastercard/Amex CREDIT card in the main driver's name (debit/Apple Pay/Google Pay not accepted). Online check-in available — worth doing post-red-eye."},
     {tag:"Lunch", kind:"locked", text:"<b>Arola</b>, Penha Longa (~1–2pm — flexible if immigration runs long)"},
     {tag:"Drive", kind:"locked", text:"Penha Longa → Monserrate: ~15 min"},
     {tag:"Afternoon", kind:"locked", text:"<b>Monserrate</b> (~2:15–3:45pm, ticket booked)"},
     {tag:"Drive", kind:"locked", text:"Monserrate → Regaleira: ~7–15 min (real data, shorter than earlier assumed)"},
-    {tag:"Afternoon", kind:"locked", text:"<b>Quinta da Regaleira</b> (~4:00–5:30pm, timed entry booked)"},
+    {tag:"Afternoon", kind:"locked", text:"<b>Quinta da Regaleira</b> — booked via Headout (ID 32809972), 8 Guests + 1 Child, start 4:30pm (not 4:00 — 30 min later than planned). Voucher exchange with a City Lisbon Tours host (white t-shirt) at Fonte dos Pisões bus stop, arrive 15 min early. ⚠ Headout will auto-charge $314.31 on Thu Jul 23, 4:30pm if not paid manually first — pay now to control the timing: headout.com/en/payment/eNyoXq6iLnhMwqmY6GwJXUiTw15xp2gdSn2HDtHQikxvYRChuxZzKWHm3YA-BgNGPDc33FrOxUpVZoqMHsVDSA=="},
+    {tag:"Tickets", kind:"locked", text:"<b>Pena Palace + Moorish Castle + National Palace</b> — ✓ Parques de Sintra purchase #7653834, confirmed. Tickets: bilheteira.parquesdesintra.pt/reports/getticket/NUcwtGtmItHl6Md-wz9qZNiHzGyLonSoH3hpuNmVSUdOd7ttLMW3K8DjmHpJwwmLYW9LGFfMHJv2fh_LXF84fQ — download before you lose signal."},
+    {tag:"Parking", kind:"locked", text:"Monserrate and Regaleira both have their own small on-site/adjacent lots — arrive on time and you're fine, but they do fill on peak days. If Regaleira's is full, the backup lot is by Museu Anjos Teixeira, ~15–17 min walk."},
     {tag:"Drive", kind:"locked", text:"Regaleira → Cascais: ~20–25 min"},
     {tag:"Evening", kind:"locked", text:"Cascais stroll (~5:55–7:40pm, ~1h45 — genuinely more time than shown before once the drive is explicit)"},
     {tag:"Dinner", kind:"locked", text:"<b>Maré – José Avillez</b>, Cascais, 8pm (backup: Arola, on-resort)"},
   ]},
-  {id:"d2", date:"Sun Jul 26", loc:"Sintra → Algarve", slots:[
+  {id:"d2", date:"Sun Jul 26", loc:"Sintra → Algarve", attire:"Pena's hilltop can still be misty at 10:30am — a layer you can shed by midday. Real walking shoes for the Moorish Castle's uneven ramparts, no shade up there. <b>Change worth planning:</b> you're in palace-touring clothes all day until you land at Pine Cliffs ~5:45pm — that's your one window to swim, shower, and change into dinner clothes before O Pescador. Pack the day bag with swimwear so it's not buried in luggage at arrival.", slots:[
+    {tag:"Parking", kind:"locked", text:"⚠ Don't drive up to Pena/Moorish Castle directly — as of 2026 the road is effectively closed to private cars and it's a real dead-end/fine risk. Park at P1 Norte (closest lot, ~€5–10/hr, 10–15 min walk or short tuk-tuk up) or the free Portela de Sintra park-and-ride (bus 434 up, every 7–10 min) and shuttle/bus the rest, matching the already-planned 'shuttle up.'"},
     {tag:"Morning", kind:"locked", text:"<b>Pena Palace</b>, guided, 10:30am — shuttle up, no early push"},
     {tag:"Midday", kind:"locked", text:"<b>Moorish Castle</b> (~11:45am–12:15pm, same hillside/shuttle)"},
     {tag:"Lunch", kind:"locked", text:"<b>Tábuas Honest Food</b>, Sintra — pencil-in, pivotable. ⚠ Reservations RECOMMENDED (fills up), not optional. No email exists (confirmed, exhaustive search) — message facebook.com/tabuasfood directly, that's the only non-phone channel. Real dish for her: Prego com Queijo da Serra"},
@@ -197,56 +205,57 @@ const DAYS = [
     {tag:"Drive", kind:"locked", text:"Sintra → Algarve: ~3h. Depart ~2:45pm → conservative arrival ~5:45pm · beach/pool"},
     {tag:"Dinner", kind:"locked", text:"<b>O Pescador</b> (Pine Cliffs) — ✓ CONFIRMED 7:00pm, 9 people. ⚠ Outside the requested 7:30–8:30pm window (30 min early) — resort only partially applied the time-shift ask. Workable either way, follow up only if 7pm genuinely doesn't work."},
   ]},
-  {id:"d3", date:"Mon Jul 27", loc:"Algarve", slots:[
-    {tag:"All day", kind:"open", accepts:["zoomarine"], lockedAlt:"Full beach/pool resort day (default) — the trip's only long resort block (~10h)"},
-    {tag:"Dinner", kind:"locked", text:"⚠ OPEN — <b>Maré at Pine Cliffs is closed, no confirmed reopening date</b> (per Pine Cliffs directly). Needs a real replacement, same situation as the earlier Portofino/Yakuza swap. Not yet resolved."},
+  {id:"d3", date:"Mon Jul 27", loc:"Algarve", attire:"Straight beach/pool day — swimwear, reef-safe sunscreen, hats. O'Grill (see dinner note) is a casual family buffet, so poolside-to-dinner works fine, nothing to change into.", slots:[
+    {tag:"All day", kind:"locked", text:"Full beach/pool resort day — the trip's only long resort block (~10h). Zoomarine cut for good, not a live decision."},
+    {tag:"Dinner", kind:"locked", text:"<b>Le Jyoti Asian Fusion</b>, Albufeira — ✓ CONFIRMED by Saroj via email. <b>Mon Jul 27, 7:30pm, party of 9</b> (5 adults, 4 children). Shellfish allergy + vegetarian noted with them. Tv. de Santa Eulália 13T, 8200-037 Albufeira. Menu has real vegetarian + vegan dishes, but also a Seafood Ramen with shrimp on it — steer around it at the table."},
   ]},
-  {id:"d4", date:"Tue Jul 28", loc:"Algarve", slots:[
+  {id:"d4", date:"Tue Jul 28", loc:"Algarve", attire:"Swimwear under quick-dry clothes for the boat — spray's likely on open water, and dolphins can mean an unplanned soak. Secure sandals, not flip-flops, for Marinha's boardwalk and stairs (photo stop, not a swim stop, per the plan). <b>Change worth planning:</b> you're back at Pine Cliffs by ~6:15pm with ~2h before Rohini at 8:30 — real time to shower off salt/sunscreen and change, not a rush.", slots:[
     {tag:"Morning", kind:"locked", text:"Beach / pool, Pine Cliffs — resort time before the boat"},
     {tag:"Drive", kind:"locked", text:"Pine Cliffs → Albufeira Marina: ~10–15 min. Leave ~1:35pm, check-in by 2:00pm (30min-before policy)"},
-    {tag:"Afternoon", kind:"locked", text:"<b>Benagil Sea Caves</b> + dolphins, private boat (Seacret Tours), 2:30–4:30pm — booked"},
+    {tag:"Afternoon", kind:"locked", text:"<b>Benagil Sea Caves</b> + dolphins, private boat, 2:30–4:30pm (~2h) — ✓ CONFIRMED, Viator booking #1424553769, 9 travelers, booked and shared by your sister via the Viator app (My Bookings → shared trip)."},
     {tag:"Drive", kind:"locked", text:"Marina → Praia da Marinha: ~30 min. Arrive ~5:00pm"},
     {tag:"Late PM", kind:"locked", text:"<b>Praia da Marinha</b> clifftop viewpoint walk, ~30–45 min. Boardwalk views of the arches/cliffs, steep stairs to the sand skipped. Wear walking shoes + sun protection, no shade; this is a look-and-photograph stop, not a swim stop."},
     {tag:"Drive", kind:"locked", text:"Marinha → Pine Cliffs: ~30 min. Back ~6:00–6:15pm — ~1h45–2h before dinner"},
     {tag:"Dinner", kind:"locked", text:"<b>Rohini</b> by Little Miss India — ✓ CONFIRMED 8:30pm, 9 people. Within the requested window."},
   ]},
-  {id:"d5", date:"Wed Jul 29", loc:"Algarve — west day", slots:[
+  {id:"d5", date:"Wed Jul 29", loc:"Algarve — west day", attire:"Grippy walking shoes for Ponta da Piedade's clifftop path. Sagres/Cabo de São Vicente is famously windy even in July heat — worth a light windbreaker just for that stop. <b>Change worth planning:</b> you're back at the resort by ~4:30pm with a full 3h pool/rest block before Piri Piri at 8:30 — plenty of room to swim and change, no need to stay in day clothes all afternoon.", slots:[
     {tag:"Drive", kind:"locked", text:"Pine Cliffs → Lagos: ~55–65 min. Leisurely breakfast, depart ~10am → conservative arrival ~11am"},
     {tag:"Morning", kind:"locked", text:"<b>Ponta da Piedade</b> clifftop walk (~11am–12:15pm)"},
-    {tag:"Lunch", kind:"locked", text:"<b>Casa do Prego</b>, Lagos, 1pm — matches their actual opening time, no gap wasted. ⚠ Reservation email sent to info@casadoprego.com, awaiting reply."},
+    {tag:"Lunch", kind:"locked", text:"<b>Casa do Prego</b>, Lagos, aim for ~12:45–1pm arrival. ⚠ CONFIRMED: no reservations accepted this season, first-come-first-served — arrive early to beat the line. Hours independently verified (owner profile, not just their odd auto-reply): open daily from 1pm. Their own reply to the direct hours question is still unanswered, but the plan doesn't depend on it."},
+    {tag:"Backup", kind:"locked", text:"If the Casa do Prego line is too long for 9: <b>Avenida</b> (Lagos Avenida Hotel, Av. dos Descobrimentos 53) — Michelin Guide pick, genuine veg/vegan dishes, Asian-inflected international menu. Has an online booking widget (ResDiary) at avenidarestaurante.pt, but it only shows dinner slots as bookable — lunch appears to be walk-in/inquiry only through that system. No phone follow-up planned per standing preference; documented here to check closer to the date. Second option: <b>A Petisqueira</b> (R. 25 de Abril 54) — real veg options, open straight through lunch, online presence only, no confirmed booking widget. Seafood-forward — confirm shellfish-free prep. (Restaurante dos Artistas is a 3rd strong Michelin pick but dinner-only in July — 6:30–10pm — not a lunch option this trip.)"},
     {tag:"Drive", kind:"locked", text:"Lagos → Sagres: ~30–35 min further west. Depart ~2pm → arrive ~2:35pm"},
     {tag:"Afternoon", kind:"locked", text:"<b>Cabo de São Vicente / Sagres</b> (~2:35–3:15pm)"},
     {tag:"Drive", kind:"locked", text:"Sagres → Pine Cliffs: ~1h15. Depart ~3:15pm → conservative arrival ~4:30pm"},
     {tag:"Rest", kind:"locked", text:"Pool/rest, ~4:30–7:30pm"},
     {tag:"Dinner", kind:"locked", text:"<b>Piri Piri Steakhouse</b> — ✓ CONFIRMED 8:30pm, 9 people. Within the requested window."},
   ]},
-  {id:"d6", date:"Thu Jul 30", loc:"Algarve — east day", slots:[
+  {id:"d6", date:"Thu Jul 30", loc:"Algarve — east day", attire:"Comfortable shoes for Olhão's market streets. For the catamaran: swimwear + a light cover-up + secure sandals, plus a hat with a strap — Cristela's confirmed both boat options have shaded areas, but pack sun protection regardless. <b>No hotel stop between the 10am departure and the boat</b> — wear or pack the swimwear from the start, it's not accessible again until you're back at Pine Cliffs ~7pm. That return gives a full hour before Yakuza (already has a shower/change slot below) — smart-casual garden setting.", slots:[
     {tag:"Drive", kind:"locked", text:"Pine Cliffs → Olhão: ~45 min. Depart ~10am → conservative arrival ~10:45am"},
     {tag:"Morning", kind:"locked", text:"<b>Olhão</b> old town — cubist Moorish architecture, market, waterfront"},
     {tag:"Drive", kind:"locked", text:"Olhão → Faro: ~10 min. Depart ~12:20pm — moved before lunch on purpose, so any slack gets absorbed by the long lunch instead of squeezed against the boat's fixed departure"},
-    {tag:"Lunch", kind:"locked", text:"<b>Vila Adentro</b>, Faro Old Town — 18th-century former azulejo-tile factory. Real vegetarian cataplana. ⚠ TWO pending requests submitted (Google/DISH widget + vilaadentro.pt form), same slot, neither confirmed yet — once one confirms, actively cancel/decline the other to avoid a duplicate."},
-    {tag:"Afternoon", kind:"locked", text:"<b>Ria Formosa private catamaran</b> — Estrela da Ria Formosa, €440/4h, departs Cais da Porta Nova, Faro (same area as lunch). Proposed 2:30–6:30pm — ⚠ time not yet confirmed by Cristela, only the date (Jul 30) and boat type are settled."},
+    {tag:"Lunch", kind:"locked", text:"<b>Vila Adentro</b>, Faro Old Town — 18th-century former azulejo-tile factory. Real vegetarian cataplana. ⚠ CONFIRMED still both pending as of Jul 21 (Google/DISH widget request + vilaadentro.pt form, both submitted same day, same slot Thu 1pm/9). Check hub email again Jul 22 AM — if neither has replied, ping both directly; if both confirm, cancel one immediately to avoid a duplicate booking."},
+    {tag:"Afternoon", kind:"locked", text:"<b>Ria Formosa private catamaran</b> — Estrela da Ria Formosa, €440/4h, departs Cais da Porta Nova, Faro (same area as lunch). 2:30–6:30pm requested. ✓ €440 PAID via Wise (Jul 22, transfer #2265168675). ⚠ Booking confirmation email sent to Cristela requesting written confirmation of catamaran + 2:30pm — reply not yet in hand, check hub email."},
     {tag:"Drive", kind:"locked", text:"Faro → Pine Cliffs: ~30 min. Conservative arrival ~7:00pm — a full hour of buffer before dinner, not rushed"},
     {tag:"Rest", kind:"locked", text:"Shower/change"},
-    {tag:"Dinner", kind:"locked", text:"<b>Yakuza by Olivier</b>, 8pm — ✓ CONFIRMED via TheFork"},
+    {tag:"Dinner", kind:"locked", text:"<b>Yakuza by Olivier</b>, 8pm — ✓ CONFIRMED via TheFork. (A request to shift to 7:30pm was emailed Jul 20 — unanswered; plan on 8pm unless they reply.)"},
   ]},
-  {id:"d7", date:"Fri Jul 31", loc:"Algarve → Lisbon", slots:[
+  {id:"d7", date:"Fri Jul 31", loc:"Algarve → Lisbon", attire:"Something you don't mind a little paint on for the tile workshop. Real walking shoes for Alfama's cobblestones and the castle's uneven ground. The tuk-tuk is open-air — Lisbon's afternoon Nortada wind picks up, so pack a light layer, especially for the 71-yo and the 3-yo. <b>No hotel return today</b> — you leave Pine Cliffs at 7:30am and don't reach the Marriott until after Taberna dinner. Whatever you put on for the workshop is what you're in through Alfama, the castle, and dinner (casual, so it works), so start the day in something you're fine wearing all 12+ hours, not just paint clothes.", slots:[
     {tag:"Drive", kind:"locked", text:"Pine Cliffs → Tv. da Memória 47A, Ajuda: real Google Maps data, 2h31–2h40m depending on route (fastest via A2 has tolls). Depart 7:30am → arrival ~10:00–10:10am, genuine 20–30 min buffer before 10:30am"},
     {tag:"Morning", kind:"locked", text:"<b>Tile painting workshop</b>, Cristina Cabrita / Galeria 1758 — ✓ PAID €450, confirmed 10:30am–1:00pm. Start time is firm (can't start later), but real grace built in: historical intro comes first, and hands-on painting time is protected until 1pm even if you arrive a few minutes late — worst case you lose some intro, not painting time. ✓ 3yo explicitly welcome. Tiles ready Sat end-of-day, or shipped if needed."},
-    {tag:"Note", kind:"locked", text:"⚠ Worth checking: Ajuda (workshop) and Alfama (Santa Restaurante lunch) are on opposite sides of Lisbon — real cross-town drive between them (~20–25 min), not adjacent like the rest of the day. Workable if the workshop ends on time, but tighter than it looks. Confirm you still want lunch at Santa given this, or consider something closer to Ajuda/Belém instead."},
+    {tag:"Note", kind:"locked", text:"⚠ Worth checking: Ajuda (workshop) and Alfama (Santa Restaurante lunch) are on opposite sides of Lisbon — real cross-town drive between them (~20–25 min), not adjacent like the rest of the day. Workable if the workshop ends on time, but tighter than it looks. Santa stays the plan since Alfama is where we need to be anyway (tuk-tuk meets nearby at R. do Comércio). <b>Jorge d'Amália</b> (Calçada da Memória 20) is literally on the workshop's street and is a genuinely well-loved local tasca (4.6 Google, 4.1 RestaurantGuru) — but honest read: it's not actually a top-of-Lisbon pick (3.6/5, ranked ~3,540 of 5,483 on TripAdvisor) and its menu is traditional and meat-only (bitoque, pica-pau, gizzards) — no vegetarian dish found in any source. Ajuda itself isn't a neighborhood with strong vegetarian options generally, so there isn't a better true best-of pick this close — this only works as a quick real bite for the meat-eaters, not a fix for everyone."},
     {tag:"Lunch", kind:"locked", text:"<b>Santa Restaurante &amp; Bar</b>, Alfama — santalisboa.com, +351 21 887 2359. Reservations recommended. Real dishes for her: mushroom risotto, cheesecake"},
-    {tag:"Afternoon", kind:"locked", text:"<b>Castelo de São Jorge</b> + Alfama/Belém tuk-tuk — ✓ BOOKED direct via Live Portugal (liveportugal.pt), 3:00–7:06pm, 1 group of 9, €591.70 total. Meeting point: R. do Comércio (close to Alfama, an easy hop from lunch). ⚠ Castelo tickets still NOT BOOKED."},
+    {tag:"Afternoon", kind:"locked", text:"<b>Castelo de São Jorge</b> + Alfama/Belém tuk-tuk — ✓ BOOKED direct via Live Portugal (liveportugal.pt), 3:00–7:06pm, 1 group of 9, €591.70 total. Meeting point: R. do Comércio (close to Alfama, an easy hop from lunch). ✓ Castelo tickets PURCHASED (BOL ID 44435618, valid to Oct 20, not time-slotted): 4 Adult + 1 Senior + 3 Child&lt;12. Correction: official policy is children 12 AND UNDER (inclusive) ride free, 13-25 is the next tier — so all 8 tickets are correct for 9 people, no gap. Free guided tours (English 3pm/4pm/6pm) register at ticket office on arrival."},
     {tag:"Dinner", kind:"locked", text:"<b>Taberna</b> (Bairro do Avillez, Chiado) — ✓ CONFIRMED, 8pm, party of 9, reservation #7D9SH94RJS4T"},
   ]},
-  {id:"d8", date:"Sat Aug 1", loc:"Lisbon", slots:[
+  {id:"d8", date:"Sat Aug 1", loc:"Lisbon", attire:"Comfortable shoes and layers for the ~3.5h food tour. For Jerónimos: a light scarf or throw-on layer for modesty at the church/cloister — accounts online disagree on how strictly it's enforced, but it costs nothing to have it in the bag. <b>No hotel return between the 10:30am food tour and the 8pm Páteo dinner</b> — worth starting the day already in smart-casual (not beachwear) since there's no realistic window to swing back to the Marriott and change before Fado at 6.", slots:[
     {tag:"Morning", kind:"locked", text:"<b>Private Undiscovered Lisbon Food &amp; Wine Tour</b> (Eating Europe, Baixa/Mouraria) — ✓ BOOKED, 10:30am–2pm, €1,000.64 paid, confirmation #364766677. Meet at Praça dos Restauradores. VIP Fado House access included."},
-    {tag:"Note", kind:"locked", text:"Oceanário dropped — no time slot left once the food tour occupies the morning. Also not distinctly Portuguese, lower priority than everything else now booked."},
-    {tag:"Afternoon", kind:"locked", text:"<b>Belém</b>: Jerónimos (⚠ timed ticket NOT BOOKED, real visit not just pass-by) + Pastéis de Belém + Praça do Comércio stroll. (Time Out Market lunch dropped — food tour already covers lunch)"},
+    {tag:"Note", kind:"locked", text:"Oceanário — not part of our Aug 1 plan (food tour fills the morning; we depart Aug 2). Flagged as a possible Aug 2 option for sister &amp; fam specifically, not for the rest of us."},
+    {tag:"Afternoon", kind:"locked", text:"<b>Jerónimos Monastery (Claustro)</b> — ✓ PURCHASED, 2:30pm entry, order 38024877 (€85.98, Google Pay): 4 Adult + 1 Senior + 4 Child≤12 — all 9 covered. Praça do Império, Belém. Direct ticket download: link.byblueticket.pt/Ticket/Get?id=38024877;74ltR9Xwe9HtoenAhQuhDTwagti6sOAf — the confirmation email itself is NOT valid for entry, must open this link or the BOL Tickets app. Tight connection off the 2pm food-tour end: head to Belém promptly. Ticket office closes 4:30pm, last entry 5pm. Then Pastéis de Belém + Praça do Comércio stroll on the way back before 6pm Fado."},
     {tag:"Tower?", kind:"locked", text:"Photograph Belém Tower from the gardens — already resolved, tuk-tuk tour passes it Jul 31"},
-    {tag:"Fado", kind:"locked", text:"<b>Lisboa em Fado</b>, 6:00pm show — ✓ CONFIRMED &amp; PAID €148.96, booking ref LEF-97979972, 5 Adult/1 Youth/3 Child"},
+    {tag:"Fado", kind:"locked", text:"<b>Lisboa em Fado</b>, 6:00pm show — ✓ CONFIRMED &amp; PAID €148.96, booking ref LEF-T138722136, 5 Adult/1 Youth/3 Child"},
     {tag:"Dinner", kind:"locked", text:"<b>Páteo</b> (Bairro do Avillez, Chiado) — ✓ CONFIRMED, 8pm, party of 9, reservation #7D9KKY3J2KWJ"},
   ]},
-  {id:"d9", date:"Sun Aug 2", loc:"Depart", travel:"Return both rental cars at Lisbon Airport, then depart LIS 11:55am → BOS 2:40pm."},
+  {id:"d9", date:"Sun Aug 2", loc:"Depart", attire:"Comfortable travel clothes — this leg's a daytime flight, no redeye layering needed.", travel:"Return both rental cars at Lisbon Airport, then depart LIS 11:55am → BOS 2:40pm."},
 ];
 
 // ---- state ----
@@ -296,6 +305,13 @@ function render(){
     head.className = "day-head";
     head.innerHTML = `<span class="d">${day.date}</span><span class="loc">${day.loc}</span>`;
     card.appendChild(head);
+
+    if(day.attire){
+      const w = document.createElement("div");
+      w.className = "day-attire";
+      w.innerHTML = `<span class="ic">👕</span><span class="txt"><b>Wear</b>${day.attire}</span>`;
+      card.appendChild(w);
+    }
 
     if(day.travel){
       const t = document.createElement("div");

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portugal 2026</title>
+<meta name="theme-color" content="#10294a">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Portugal 2026">
+<style>
+:root{
+  --ink:#15355e; --blue:#2f6fb0; --blue-deep:#10294a;
+  --gold:#cf9a3c; --gold-deep:#a9761f;
+  --paper:#f3eee3; --card:#ffffff; --line:#e6ddca; --muted:#6c7b8d;
+  --green:#1d8257; --green-s:#e2f2ea;
+  --amber:#b3781f; --amber-s:#f8edd2;
+  --red:#a8514f; --red-s:#f1e2e1;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:70px}
+a{color:var(--blue);text-decoration:none}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:10px 16px;
+  background:rgba(243,238,227,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .brand{font-weight:800;font-size:14px;color:var(--ink);font-family:Georgia,serif}
+.topbar .offline-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.topbar .offline-dot.off{background:var(--red)}
+.topbar .netstate{font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue-deep),var(--ink) 55%,#1c4a7d);color:#fff;padding:22px 18px 18px}
+.hero h1{font-weight:600;font-size:22px;margin:0 0 4px}
+.hero p{font-size:12.5px;color:#d8e6f4;margin:0}
+
+nav.daynav{position:sticky;top:44px;z-index:25;display:flex;gap:6px;overflow-x:auto;padding:9px 12px;
+  background:rgba(243,238,227,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  -webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav.daynav::-webkit-scrollbar{display:none}
+nav.daynav a{flex:0 0 auto;font-size:11px;font-weight:800;padding:6px 10px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);color:var(--ink);white-space:nowrap}
+
+main{max-width:640px;margin:0 auto;padding:14px 12px 0}
+
+.openbox{background:var(--amber-s);border:1.5px solid #eccf8f;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.openbox h2{font-size:13px;margin:0 0 6px;color:var(--amber-deep,#8a5a13)}
+.openbox ul{margin:0;padding-left:18px;font-size:12.5px;line-height:1.6}
+
+.day{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;scroll-margin-top:96px}
+.day-head{padding:11px 14px;background:linear-gradient(135deg,#fbf8f1,#f3eee3);border-bottom:1px solid var(--line)}
+.day-head .d{font-family:Georgia,serif;font-weight:700;font-size:16px;color:var(--ink)}
+.day-head .loc{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--gold-deep);margin-top:1px}
+.day-attire{padding:9px 14px;font-size:11.5px;line-height:1.4;color:#5a4623;background:#fdf7ea;border-bottom:1px solid var(--line)}
+.day-attire b{color:var(--gold-deep);text-transform:uppercase;font-size:9.5px;letter-spacing:.06em;margin-right:5px}
+
+.item{padding:11px 14px;border-top:1px solid #f1ece0}
+.item:first-of-type{border-top:none}
+.item .row1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.item .time{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.item .status{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;text-transform:uppercase}
+.status.ok{background:var(--green-s);color:var(--green)}
+.status.pending{background:var(--amber-s);color:var(--amber)}
+.item h3{font-size:14.5px;margin:2px 0 3px;font-family:Georgia,serif}
+.item .desc{font-size:12.5px;color:#3c4a5a;margin-bottom:6px}
+.linkrow{display:flex;flex-wrap:wrap;gap:6px}
+.linkrow a,.linkrow span.nolink{font-size:11px;font-weight:700;padding:5px 9px;border-radius:7px;
+  background:#f4f0e4;color:var(--ink);border:1px solid var(--line)}
+.linkrow a:active{background:var(--ink);color:#fff}
+.note{font-size:11.5px;color:#6c5a2a;background:#fdf7ea;border-left:3px solid var(--gold);padding:5px 8px;margin-top:6px;border-radius:4px}
+.note.warn{color:#7a3226;background:#f8ece9;border-left-color:var(--red)}
+
+footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted);font-size:11px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand">Portugal 2026</span>
+  <span style="margin-left:auto;display:flex;align-items:center;gap:6px">
+    <span class="offline-dot" id="netdot"></span>
+    <span class="netstate" id="netstate">Online</span>
+  </span>
+</div>
+
+<header class="hero">
+  <h1>The Locked Itinerary</h1>
+  <p>Every day, every reservation, every ticket — tap an address for directions, tap a phone number to call. Works fully offline once loaded.</p>
+</header>
+
+<nav class="daynav" id="daynav"></nav>
+
+<main>
+  <div class="openbox">
+    <h2>⚠ Still open (5 items)</h2>
+    <ul>
+      <li><b>Regaleira payment</b> — Headout auto-charges Thu Jul 23, 4:30pm if not paid manually first</li>
+      <li><b>Vila Adentro</b> (Jul 30 lunch) — both channels still unconfirmed; A Venda Petiscos is the backup</li>
+      <li><b>Ria Formosa written confirmation</b> — €440 paid via Wise, awaiting Cristela's reply confirming catamaran + time</li>
+      <li><b>Yakuza time shift</b> — request to move 8pm→7:30pm unanswered; plan on 8pm</li>
+      <li><b>Casa do Prego hours</b> — 1pm confirmed independently; their own reply to the direct question is still pending</li>
+    </ul>
+  </div>
+
+  <div id="days"></div>
+</main>
+
+<footer class="pg">Portugal 2026 · installed to home screen · works offline</footer>
+
+<script>
+const DAYS = [
+{id:"d0",date:"Fri Jul 24",loc:"Depart Boston",attire:"Layers for TAP's cool cabin overnight.",items:[
+  {time:"10:45pm",status:"ok",title:"TAP TP216 → Lisbon",desc:"Red-eye. Ref YT74LQ.",links:[]}
+]},
+{id:"d1",date:"Sat Jul 25",loc:"Sintra / Cascais",attire:"Sintra runs 5–9°F cooler/mistier than Lisbon. Layer for Monserrate; closed-toe shoes for Regaleira's well stairs. No hotel return today — dress for the whole day at once.",items:[
+  {time:"~11am",status:"ok",title:"Rental car pickup",desc:"BeRent/DiscoverCars #D014627141 · Škoda Superb wagon, 5 seats, paid €1,009.15. Physical license + passport required, credit card (not debit) in main driver's name.",links:[{t:"Lisbon Airport",u:"https://maps.google.com/?q=Lisbon+Airport"}]},
+  {time:"3pm",status:"ok",title:"Check in: Penha Longa Resort",desc:"Conf #74355170 · Estrada da Lagoa Azul, Linhó, Sintra 2714-511 · your family's room (2 adults, 1 child).",links:[{t:"Address",u:"https://maps.google.com/?q=Penha+Longa+Resort+Sintra"},{t:"Call",u:"tel:+351219249011"}]},
+  {time:"~1pm",status:"ok",title:"Lunch: Arola",desc:"Penha Longa, on-site tapas.",links:[]},
+  {time:"2:15pm",status:"ok",title:"Monserrate Palace",desc:"Parques de Sintra #7653834 — ticket in packet.",links:[{t:"Address",u:"https://maps.google.com/?q=Monserrate+Palace+Sintra"}]},
+  {time:"4:30pm",status:"pending",title:"Quinta da Regaleira",desc:"Headout #32809972 · voucher exchange with City Lisbon Tours host (white t-shirt) at Fonte dos Pisões bus stop, arrive 15 min early.",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Fonte+dos+Pisoes+Sintra"},{t:"Pay now",u:"https://www.headout.com/en/payment/eNyoXq6iLnhMwqmY6GwJXUiTw15xp2gdSn2HDtHQikxvYRChuxZzKWHm3YA-BgNGPDc33FrOxUpVZoqMHsVDSA=="}],note:{warn:true,text:"Auto-charges $314.31 Thu Jul 23 4:30pm if not paid first"}},
+  {time:"~6pm",status:"ok",title:"Cascais stroll",desc:"Real buffer built in — genuinely more time than it looks.",links:[]},
+  {time:"8pm",status:"ok",title:"Dinner: Maré – José Avillez",desc:"Cascais · backup: Arola on-site.",links:[{t:"Menu",u:"https://marejoseavillez.pt/en/"}]}
+]},
+{id:"d2",date:"Sun Jul 26",loc:"Sintra → Algarve",attire:"Pena's hilltop can be misty at 10:30am. Real walking shoes for the Moorish Castle. Swim gear packed for Pine Cliffs arrival.",items:[
+  {time:"—",status:"ok",title:"Parking note",desc:"Private cars not allowed up to Pena/Moorish Castle. Park P1 Norte or free Portela de Sintra park-and-ride, shuttle/bus up.",links:[]},
+  {time:"10:30am",status:"ok",title:"Pena Palace, guided",desc:"Parques de Sintra ticket — in packet.",links:[{t:"Address",u:"https://maps.google.com/?q=Pena+Palace+Sintra"}]},
+  {time:"11:45am",status:"ok",title:"Moorish Castle",desc:"Same hillside, same shuttle. Ticket in packet.",links:[]},
+  {time:"~1pm",status:"pending",title:"Lunch: Tábuas Honest Food",desc:"Sintra town · reservations fill fast, no email exists — Facebook message only. Cash/local cards preferred.",links:[{t:"Facebook",u:"https://www.facebook.com/tabuasfood/"}]},
+  {time:"1:45pm",status:"ok",title:"National Palace of Sintra",desc:"Self-guided, free audioguide app. Ticket in packet.",links:[]},
+  {time:"2:45pm",status:"ok",title:"Drive to Algarve",desc:"~3h drive.",links:[]},
+  {time:"4pm",status:"ok",title:"Check in: Pine Cliffs Residence",desc:"Conf #75007164 · Praia da Falésia, Albufeira · 3-Bedroom Residence (2 Double + 2 Twin + 2 sofa beds).",links:[{t:"Address",u:"https://maps.google.com/?q=Pine+Cliffs+Resort+Albufeira"}]},
+  {time:"7pm",status:"ok",title:"Dinner: O Pescador",desc:"On-property · confirmed, 9 people.",links:[]}
+]},
+{id:"d3",date:"Mon Jul 27",loc:"Algarve — resort day",attire:"Straight beach/pool day. Le Jyoti is casual — poolside-to-dinner works.",items:[
+  {time:"all day",status:"ok",title:"Full beach/pool day",desc:"Zoomarine cut for good — not a live decision.",links:[]},
+  {time:"7:30pm",status:"ok",title:"Dinner: Le Jyoti Asian Fusion",desc:"Albufeira · CONFIRMED by Saroj, 9 people (5 adults, 4 children), allergy + vegetarian noted. Avoid the Seafood Ramen.",links:[{t:"Address",u:"https://maps.google.com/?q=Tv.+de+Santa+Eulalia+13T+Albufeira"}]}
+]},
+{id:"d4",date:"Tue Jul 28",loc:"Algarve",attire:"Swimwear under quick-dry for the boat. Secure sandals for Marinha. Real 2h buffer before Rohini to shower/change.",items:[
+  {time:"morning",status:"ok",title:"Beach / pool",desc:"Resort time before the boat.",links:[]},
+  {time:"2:30pm",status:"ok",title:"Benagil Sea Caves + dolphins",desc:"Viator #1424553769 · ~2h, 9 travelers · booked & shared by your sister.",links:[{t:"Albufeira Marina",u:"https://maps.google.com/?q=Albufeira+Marina"}]},
+  {time:"~5pm",status:"ok",title:"Praia da Marinha",desc:"Clifftop viewpoint — photo stop, not a swim stop.",links:[]},
+  {time:"8:30pm",status:"ok",title:"Dinner: Rohini by Little Miss India",desc:"Confirmed, 9 people. Lowest shellfish-risk menu on the trip.",links:[]}
+]},
+{id:"d5",date:"Wed Jul 29",loc:"Algarve — west day",attire:"Grippy shoes for Ponta da Piedade. Windbreaker for Sagres. Real 3h pool window before Piri Piri.",items:[
+  {time:"11am",status:"ok",title:"Ponta da Piedade",desc:"Clifftop walk.",links:[]},
+  {time:"~12:45pm",status:"pending",title:"Lunch: Casa do Prego",desc:"Lagos · CONFIRMED no reservations taken this season — walk in, arrive early. Hours verified independently: daily from 1pm.",links:[{t:"Address",u:"https://maps.google.com/?q=R.+Lancarote+de+Freitas+18+Lagos"},{t:"Call",u:"tel:+351913505038"}],note:{warn:false,text:"If the line's too long: Avenida (Lagos Avenida Hotel) or A Petisqueira, R. 25 de Abril 54"}},
+  {time:"2:35pm",status:"ok",title:"Cabo de São Vicente / Sagres",desc:"Quick viewpoint stop.",links:[]},
+  {time:"8:30pm",status:"ok",title:"Dinner: Piri Piri Steakhouse",desc:"On-property · confirmed, 9 people.",links:[]}
+]},
+{id:"d6",date:"Thu Jul 30",loc:"Algarve — east day",attire:"Comfortable shoes for Olhão. Swimwear + cover-up + secure sandals for the catamaran, worn from the morning — no hotel stop until evening.",items:[
+  {time:"10:45am",status:"ok",title:"Olhão old town",desc:"Market, cubist Moorish architecture.",links:[]},
+  {time:"~1pm",status:"pending",title:"Lunch: Vila Adentro",desc:"Faro Old Town · both requests (Google/DISH) still pending as of last check.",links:[{t:"Address",u:"https://maps.google.com/?q=Praca+Dom+Afonso+III+17+Faro"}],note:{warn:true,text:"Backup: A Venda Petiscos, downtown Faro — explicitly veg/vegan-friendly"}},
+  {time:"2:30pm",status:"pending",title:"Ria Formosa private catamaran",desc:"Estrela da Ria Formosa · €440 PAID via Wise (transfer #2265168675) · departs Cais da Porta Nova, Faro.",links:[{t:"Departure point",u:"https://maps.google.com/?q=Cais+da+Porta+Nova+Faro"}],note:{warn:true,text:"Awaiting Cristela's written confirmation of catamaran + time"}},
+  {time:"8pm",status:"ok",title:"Dinner: Yakuza by Olivier",desc:"Confirmed via TheFork. Time-shift to 7:30 requested, unanswered — plan for 8.",links:[]}
+]},
+{id:"d7",date:"Fri Jul 31",loc:"Algarve → Lisbon",attire:"Paint-safe clothes for the workshop, worn all day — no hotel return until after dinner. Real walking shoes. Light layer for the tuk-tuk's afternoon wind.",items:[
+  {time:"7:30am",status:"ok",title:"Drive to Lisbon",desc:"~2h30m to Ajuda.",links:[]},
+  {time:"10:30am",status:"ok",title:"Tile painting workshop",desc:"Galeria 1758, Cristina Cabrita · PAID · Tv. da Memória 47A, Ajuda. 3yo welcome.",links:[{t:"Address",u:"https://maps.google.com/?q=Tv.+da+Memoria+47A+Ajuda+Lisboa"},{t:"Call",u:"tel:+351915130289"}]},
+  {time:"~1:30pm",status:"pending",title:"Lunch: Santa Restaurante & Bar",desc:"Alfama · reservations recommended.",links:[{t:"Site",u:"https://www.santalisboa.com/"},{t:"Call",u:"tel:+351218872359"}],note:{warn:false,text:"Quick-bite backup near the workshop: Jorge d'Amália, Calçada da Memória 20 (meat-only, not vegetarian-friendly)"}},
+  {time:"3pm",status:"ok",title:"Castelo de São Jorge + tuk-tuk",desc:"Live Portugal · €591.70 paid · meets at R. do Comércio. Castelo tickets (8) in packet, correct for 9 (12-and-under free).",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Rua+do+Comercio+Lisboa"},{t:"Call",u:"tel:+351912077956"}]},
+  {time:"4pm",status:"ok",title:"Check in: Lisbon Marriott",desc:"Conf #74198853 · Jul 31–Aug 2, 2 nights · confirmed correct dates.",links:[{t:"Address",u:"https://maps.google.com/?q=Lisbon+Marriott+Hotel"}]},
+  {time:"8pm",status:"ok",title:"Dinner: Taberna",desc:"Bairro do Avillez, Chiado · confirmed #7D9SH94RJS4T.",links:[{t:"Address",u:"https://maps.google.com/?q=Rua+Nova+da+Trindade+18+Lisboa"}]}
+]},
+{id:"d8",date:"Sat Aug 1",loc:"Lisbon",attire:"Comfortable shoes for the food tour. Scarf for Jerónimos modesty hedge. No hotel return — start the day smart-casual for Fado/Páteo tonight.",items:[
+  {time:"10:30am",status:"ok",title:"Private food tour",desc:"Eating Europe · confirmed #364766677 · meet Praça dos Restauradores.",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Praca+dos+Restauradores+Lisboa"},{t:"Call",u:"tel:+19179096432"}]},
+  {time:"2:30pm",status:"ok",title:"Jerónimos Monastery",desc:"Order #38024877 · 9 tickets in packet · download link required, email alone won't scan.",links:[{t:"Address",u:"https://maps.google.com/?q=Praca+do+Imperio+Belem+Lisboa"},{t:"Tickets",u:"https://link.byblueticket.pt/Ticket/Get?id=38024877;74ltR9Xwe9HtoenAhQuhDTwagti6sOAf"}]},
+  {time:"~4pm",status:"ok",title:"Pastéis de Belém + Comércio stroll",desc:"On the way back toward Chiado.",links:[]},
+  {time:"6pm",status:"ok",title:"Lisboa em Fado",desc:"Confirmed LEF-T138722136 · Baixa/Chiado.",links:[]},
+  {time:"8pm",status:"ok",title:"Dinner: Páteo",desc:"Bairro do Avillez, Chiado · confirmed #7D9KKY3J2KWJ.",links:[{t:"Address",u:"https://maps.google.com/?q=Rua+Nova+da+Trindade+18+Lisboa"}]}
+]},
+{id:"d9",date:"Sun Aug 2",loc:"Depart",attire:"Comfortable travel clothes — daytime flight.",items:[
+  {time:"—",status:"ok",title:"Return both rental cars",desc:"Lisbon Airport, by 11am.",links:[]},
+  {time:"11:55am",status:"ok",title:"TAP → Boston",desc:"Ref YT74LQ, lands 2:40pm.",links:[]}
+]}
+];
+
+function render(){
+  const nav = document.getElementById('daynav');
+  const days = document.getElementById('days');
+  nav.innerHTML = DAYS.map(d=>`<a href="#${d.id}">${d.date.split(' ')[1]} ${d.date.split(' ')[2]}</a>`).join('');
+  days.innerHTML = DAYS.map(d=>`
+    <section class="day" id="${d.id}">
+      <div class="day-head"><span class="d">${d.date}</span><span class="loc">${d.loc}</span></div>
+      ${d.attire?`<div class="day-attire"><b>Wear</b>${d.attire}</div>`:''}
+      ${d.items.map(it=>`
+        <div class="item">
+          <div class="row1"><span class="time">${it.time}</span><span class="status ${it.status}">${it.status==='ok'?'Set':'Open'}</span></div>
+          <h3>${it.title}</h3>
+          <div class="desc">${it.desc}</div>
+          ${it.links.length?`<div class="linkrow">${it.links.map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`).join('')}</div>`:''}
+          ${it.note?`<div class="note ${it.note.warn?'warn':''}">${it.note.text}</div>`:''}
+        </div>
+      `).join('')}
+    </section>
+  `).join('');
+}
+render();
+
+function updateNet(){
+  const dot = document.getElementById('netdot');
+  const state = document.getElementById('netstate');
+  if(navigator.onLine){ dot.classList.remove('off'); state.textContent = 'Online'; }
+  else { dot.classList.add('off'); state.textContent = 'Offline — cached'; }
+}
+window.addEventListener('online', updateNet);
+window.addEventListener('offline', updateNet);
+updateNet();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
