@@ -1,18 +1,31 @@
-const CACHE = 'pt2026-v2';
-const ASSETS = [
+const CACHE = 'pt2026-v3';
+const CORE = [
   './itinerary.html',
-  './planner.html',
-  './index.html',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
   './tickets-data.js'
 ];
+const EXTRA = [
+  './planner.html',
+  './index.html',
+  './icon-192.png',
+  './icon-512.png'
+];
 
+// Cache each file individually: one failure must not wipe out the whole install.
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    // Core assets must succeed — retry each once before giving up.
+    await Promise.all(CORE.map(async (url) => {
+      for (let i = 0; i < 2; i++) {
+        try { await cache.add(new Request(url, { cache: 'reload' })); return; }
+        catch (e) { if (i === 1) console.warn('core cache failed', url, e); }
+      }
+    }));
+    // Nice-to-haves: never block the install.
+    await Promise.allSettled(EXTRA.map((url) => cache.add(url)));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', (event) => {
@@ -23,16 +36,19 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Cache-first for same-origin app files; network-first fallback for everything else
-// (so map/menu links still try to go live, but never hard-fail offline)
+// Cache-first for same-origin app files; network-first for everything else
+// (map/menu links still go live, but never hard-fail offline)
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   if (url.origin === self.location.origin) {
     event.respondWith(
       caches.match(event.request).then((cached) => {
         return cached || fetch(event.request).then((resp) => {
-          const copy = resp.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          if (resp && resp.status === 200) {
+            const copy = resp.clone();
+            caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          }
           return resp;
         }).catch(() => cached);
       })

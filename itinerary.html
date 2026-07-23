@@ -67,7 +67,8 @@ main{max-width:640px;margin:0 auto;padding:14px 12px 0}
 .item h3{font-size:14.5px;margin:2px 0 3px;font-family:Georgia,serif}
 .item .desc{font-size:12.5px;color:#3c4a5a;margin-bottom:6px}
 .linkrow{display:flex;flex-wrap:wrap;gap:6px}
-.linkrow a,.linkrow span.nolink{font-size:11px;font-weight:700;padding:5px 9px;border-radius:7px;
+.linkrow a,.linkrow span.nolink{font-size:12.5px;font-weight:700;padding:9px 13px;border-radius:8px;
+  min-height:40px;display:inline-flex;align-items:center;
   background:#f4f0e4;color:var(--ink);border:1px solid var(--line)}
 .linkrow a:active{background:var(--ink);color:#fff}
 .note{font-size:11.5px;color:#6c5a2a;background:#fdf7ea;border-left:3px solid var(--gold);padding:5px 8px;margin-top:6px;border-radius:4px}
@@ -75,7 +76,8 @@ main{max-width:640px;margin:0 auto;padding:14px 12px 0}
 
 footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted);font-size:11px;text-align:center}
 
-.tkbtn{font-size:11px;font-weight:800;padding:5px 9px;border-radius:7px;background:var(--gold);color:#3a2708;border:1px solid var(--gold-deep)}
+.tkbtn{font-size:13px;font-weight:800;padding:10px 15px;border-radius:8px;min-height:44px;
+  background:var(--gold);color:#3a2708;border:1px solid var(--gold-deep);cursor:pointer}
 .tkbtn:active{background:var(--gold-deep);color:#fff}
 .lb{position:fixed;inset:0;z-index:100;background:rgba(16,41,74,.95);display:none;flex-direction:column}
 .lb.open{display:flex}
@@ -84,7 +86,36 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
 .lb-top .lb-count{font-size:12px;color:#cfe0f2;font-weight:700}
 .lb-close{background:none;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:8px;padding:5px 11px;font-size:13px;font-weight:800}
 .lb-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;background:#fff;border-radius:6px}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;background:#fff;border-radius:6px;
+  transform-origin:center center;touch-action:none;will-change:transform}
+.lb-zoomhint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);
+  color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px;pointer-events:none}
+.lb-zoomhint.hide{display:none}
+
+.rdy{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.04em;padding:4px 9px;border-radius:999px;border:1px solid}
+.rdy.wait{background:var(--amber-s);color:#8a5a13;border-color:#e6c98a}
+.rdy.ready{background:var(--green-s);color:var(--green);border-color:#9fd3ba}
+.rdy.err{background:var(--red-s);color:var(--red);border-color:#dbb2b0}
+
+.install{background:#10294a;color:#fff;padding:12px 14px;border-radius:12px;margin-bottom:14px;font-size:12.5px;line-height:1.5}
+.install h2{font-size:13.5px;margin:0 0 5px;color:#ffd98a}
+.install b{color:#ffd98a}
+.install .dismiss{margin-top:9px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+  color:#fff;font-size:12px;font-weight:700;padding:8px 13px;border-radius:8px;min-height:38px}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:200;background:#10294a;color:#fff;
+  font-size:12.5px;font-weight:600;padding:11px 16px;border-radius:10px;max-width:88%;text-align:center;
+  box-shadow:0 6px 22px rgba(0,0,0,.3);display:none}
+.toast.show{display:block}
+
+.day.today{border-color:var(--gold);border-width:2px;box-shadow:0 0 0 3px rgba(207,154,60,.15)}
+.todaytag{display:inline-block;background:var(--gold);color:#3a2708;font-size:9.5px;font-weight:800;
+  padding:2px 7px;border-radius:999px;margin-left:7px;text-transform:uppercase;letter-spacing:.05em}
+nav.daynav a.is-today{background:var(--gold);border-color:var(--gold-deep);color:#3a2708}
+
+.openbox summary{font-size:13px;font-weight:800;color:#8a5a13;cursor:pointer;list-style:none}
+.openbox summary::-webkit-details-marker{display:none}
 .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);color:#10294a;border:none;width:44px;height:44px;border-radius:50%;font-size:24px;font-weight:800;line-height:1}
 .lb-prev{left:10px}.lb-next{right:10px}
 .lb-hint{text-align:center;color:#cfe0f2;font-size:11px;padding:7px 12px 11px}
@@ -95,8 +126,7 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
 <div class="topbar">
   <span class="brand">Portugal 2026</span>
   <span style="margin-left:auto;display:flex;align-items:center;gap:6px">
-    <span class="offline-dot" id="netdot"></span>
-    <span class="netstate" id="netstate">Online</span>
+    <span class="rdy wait" id="rdy">Checking…</span>
   </span>
 </div>
 
@@ -108,8 +138,18 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
 <nav class="daynav" id="daynav"></nav>
 
 <main>
-  <div class="openbox">
-    <h2>⚠ Still open (5 items)</h2>
+  <div class="install" id="installBox">
+    <h2>Set this up for offline use — do this on WiFi</h2>
+    If you opened this from a message, tap <b>⋯ → Open in Safari</b> (iPhone) or <b>⋮ → Open in Chrome</b> (Android) first — in-app browsers can't save it.<br><br>
+    1. Stay on this page until the badge up top says <b>Offline ready</b> (~15 sec — it's downloading all 63 tickets).<br>
+    2. iPhone: <b>Share → Add to Home Screen</b>. Android: <b>⋮ → Install app</b>.<br>
+    3. Open it from the new icon once, while you still have signal.<br><br>
+    After that it works with no signal at all — every ticket included.
+    <button class="dismiss" onclick="document.getElementById('installBox').style.display='none'">Got it</button>
+  </div>
+
+  <details class="openbox">
+    <summary>⚠ Still open (5 items) — tap to view</summary>
     <ul>
       <li><b>Regaleira payment</b> — Headout auto-charges Thu Jul 23, 4:30pm if not paid manually first</li>
       <li><b>Vila Adentro</b> (Jul 30 lunch) — both channels still unconfirmed; A Venda Petiscos is the backup</li>
@@ -117,12 +157,16 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
       <li><b>Yakuza time shift</b> — request to move 8pm→7:30pm unanswered; plan on 8pm</li>
       <li><b>Casa do Prego hours</b> — 1pm confirmed independently; their own reply to the direct question is still pending</li>
     </ul>
-  </div>
+  </details>
 
   <div id="days"></div>
 </main>
 
-<footer class="pg">Portugal 2026 · installed to home screen · works offline</footer>
+<footer class="pg">
+  <a href="./index.html" style="font-weight:700">Trip Board (menus &amp; notes)</a> ·
+  <a href="./planner.html" style="font-weight:700">Planner</a><br><br>
+  Portugal 2026 · add to home screen · works offline
+</footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true">
   <div class="lb-top">
@@ -133,9 +177,12 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
     <button class="lb-nav lb-prev" onclick="tixNav(-1)" aria-label="Previous">‹</button>
     <img id="lbImg" alt="Ticket — show at the gate">
     <button class="lb-nav lb-next" onclick="tixNav(1)" aria-label="Next">›</button>
+    <div class="lb-zoomhint" id="zoomHint">Pinch or double-tap to enlarge the barcode</div>
   </div>
-  <div class="lb-hint">Swipe or tap ‹ › · show at the gate · works offline once loaded</div>
+  <div class="lb-hint">Swipe for next · pinch / double-tap to zoom · rotate phone for a wider barcode</div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script src="./tickets-data.js"></script>
 <script>
@@ -208,10 +255,10 @@ const DAYS = [
 function render(){
   const nav = document.getElementById('daynav');
   const days = document.getElementById('days');
-  nav.innerHTML = DAYS.map(d=>`<a href="#${d.id}">${d.date.split(' ')[1]} ${d.date.split(' ')[2]}</a>`).join('');
+  nav.innerHTML = DAYS.map(d=>`<a class="${d.id===TODAY_ID?'is-today':''}" href="#${d.id}">${d.date.split(' ')[1]} ${d.date.split(' ')[2]}</a>`).join('');
   days.innerHTML = DAYS.map(d=>`
-    <section class="day" id="${d.id}">
-      <div class="day-head"><span class="d">${d.date}</span><span class="loc">${d.loc}</span></div>
+    <section class="day${d.id===TODAY_ID?' today':''}" id="${d.id}">
+      <div class="day-head"><span class="d">${d.date}</span>${d.id===TODAY_ID?'<span class="todaytag">Today</span>':''}<span class="loc">${d.loc}</span></div>
       ${d.attire?`<div class="day-attire"><b>Wear</b>${d.attire}</div>`:''}
       ${d.items.map(it=>`
         <div class="item">
@@ -225,12 +272,34 @@ function render(){
     </section>
   `).join('');
 }
-render();
+// ---- today detection (trip runs Jul 24 - Aug 2, 2026) ----
+var TRIP={d0:'2026-07-24',d1:'2026-07-25',d2:'2026-07-26',d3:'2026-07-27',d4:'2026-07-28',
+          d5:'2026-07-29',d6:'2026-07-30',d7:'2026-07-31',d8:'2026-08-01',d9:'2026-08-02'};
+var TODAY_ID=(function(){
+  var n=new Date(), t=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+  for(var k in TRIP){ if(TRIP[k]===t) return k; }
+  return null;
+})();
 
-let TIX=[],TIXi=0;
+render();
+if(TODAY_ID){ setTimeout(function(){ var el=document.getElementById(TODAY_ID); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); },400); }
+
+function toast(msg){
+  var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(window._tt); window._tt=setTimeout(function(){t.classList.remove('show');},3800);
+}
+
+// ---- ticket lightbox with pinch / double-tap zoom ----
+var TIX=[],TIXi=0,scale=1,tx=0,ty=0;
+var img=null,stage=null;
+function els(){ img=document.getElementById('lbImg'); stage=document.getElementById('lbStage'); }
+function applyT(){ if(img) img.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; }
+function resetZoom(){ scale=1;tx=0;ty=0;applyT(); var h=document.getElementById('zoomHint'); if(h)h.classList.remove('hide'); }
+
 function openTix(key,title){
+  els();
   TIX=((window.TICKETS||{})[key])||[];
-  if(!TIX.length){alert('Tickets are still loading — connect to WiFi once to cache them, then reopen.');return;}
+  if(!TIX.length){ toast('Tickets are still downloading. Stay on WiFi a few seconds, then tap again.'); return; }
   TIXi=0;
   document.getElementById('lbTitle').textContent=title||'Tickets';
   showTix();
@@ -238,27 +307,92 @@ function openTix(key,title){
   document.body.style.overflow='hidden';
 }
 function showTix(){
-  document.getElementById('lbImg').src=TIX[TIXi];
+  els(); resetZoom();
+  img.src=TIX[TIXi];
   document.getElementById('lbCount').textContent=(TIXi+1)+' / '+TIX.length;
 }
 function tixNav(d){ if(!TIX.length)return; TIXi=(TIXi+d+TIX.length)%TIX.length; showTix(); }
-function closeTix(){ document.getElementById('lb').classList.remove('open'); document.getElementById('lbImg').src=''; document.body.style.overflow=''; }
+function closeTix(){
+  document.getElementById('lb').classList.remove('open');
+  els(); img.src=''; resetZoom(); document.body.style.overflow='';
+}
+
 (function(){
-  let x0=null;
-  document.addEventListener('touchstart',function(e){ if(document.getElementById('lb').classList.contains('open')) x0=e.touches[0].clientX; },{passive:true});
-  document.addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) tixNav(dx<0?1:-1); x0=null; },{passive:true});
-  document.addEventListener('keydown',function(e){ if(!document.getElementById('lb').classList.contains('open'))return; if(e.key==='Escape')closeTix(); else if(e.key==='ArrowRight')tixNav(1); else if(e.key==='ArrowLeft')tixNav(-1); });
+  var x0=null,y0=null,d0=null,s0=1,px=0,py=0,panning=false,lastTap=0;
+  function dist(t){ var dx=t[0].clientX-t[1].clientX, dy=t[0].clientY-t[1].clientY; return Math.hypot(dx,dy); }
+  function isOpen(){ return document.getElementById('lb').classList.contains('open'); }
+
+  document.addEventListener('touchstart',function(e){
+    if(!isOpen())return;
+    els();
+    if(e.touches.length===2){ d0=dist(e.touches); s0=scale; panning=false; x0=null;
+      document.getElementById('zoomHint').classList.add('hide');
+    } else if(e.touches.length===1){
+      x0=e.touches[0].clientX; y0=e.touches[0].clientY;
+      if(scale>1){ panning=true; px=tx; py=ty; }
+      var now=Date.now();
+      if(now-lastTap<300){
+        if(scale>1){ resetZoom(); } else { scale=3; applyT(); document.getElementById('zoomHint').classList.add('hide'); }
+        lastTap=0;
+      } else lastTap=now;
+    }
+  },{passive:true});
+
+  document.addEventListener('touchmove',function(e){
+    if(!isOpen())return;
+    if(e.touches.length===2&&d0){
+      var ns=Math.min(6,Math.max(1,s0*(dist(e.touches)/d0)));
+      scale=ns; if(scale<=1){tx=0;ty=0;} applyT();
+    } else if(e.touches.length===1&&panning&&scale>1){
+      tx=px+(e.touches[0].clientX-x0); ty=py+(e.touches[0].clientY-y0); applyT();
+    }
+  },{passive:true});
+
+  document.addEventListener('touchend',function(e){
+    if(!isOpen())return;
+    if(d0&&e.touches.length<2){ d0=null; if(scale<=1) resetZoom(); }
+    // swipe to next ONLY when not zoomed (otherwise panning would change images)
+    if(!panning&&scale<=1&&x0!==null&&e.changedTouches.length){
+      var dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+      if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)) tixNav(dx<0?1:-1);
+    }
+    panning=false; x0=null;
+  },{passive:true});
+
+  document.addEventListener('keydown',function(e){
+    if(!isOpen())return;
+    if(e.key==='Escape')closeTix();
+    else if(e.key==='ArrowRight')tixNav(1);
+    else if(e.key==='ArrowLeft')tixNav(-1);
+  });
 })();
 
-function updateNet(){
-  const dot = document.getElementById('netdot');
-  const state = document.getElementById('netstate');
-  if(navigator.onLine){ dot.classList.remove('off'); state.textContent = 'Online'; }
-  else { dot.classList.add('off'); state.textContent = 'Offline — cached'; }
+// ---- REAL offline-readiness: checks the cache, not just the network ----
+function setRdy(cls,txt){ var b=document.getElementById('rdy'); if(!b)return; b.className='rdy '+cls; b.textContent=txt; }
+async function checkReady(){
+  if(!('caches' in window)){ setRdy('err','No offline support'); return true; }
+  try{
+    var names=await caches.keys();
+    for(var i=0;i<names.length;i++){
+      var c=await caches.open(names[i]);
+      var hit=await c.match('./tickets-data.js');
+      if(hit){ setRdy('ready','✓ Offline ready'); return true; }
+    }
+    setRdy('wait', navigator.onLine?'Caching… stay on WiFi':'Offline — not saved yet');
+    return false;
+  }catch(e){ setRdy('err','Cache check failed'); return true; }
 }
-window.addEventListener('online', updateNet);
-window.addEventListener('offline', updateNet);
-updateNet();
+(function(){
+  var tries=0;
+  (function loop(){
+    checkReady().then(function(done){
+      tries++;
+      if(!done&&tries<40) setTimeout(loop,2000);
+    });
+  })();
+  window.addEventListener('online',checkReady);
+  window.addEventListener('offline',checkReady);
+})();
 
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{
