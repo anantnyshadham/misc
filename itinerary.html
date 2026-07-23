@@ -74,6 +74,20 @@ main{max-width:640px;margin:0 auto;padding:14px 12px 0}
 .note.warn{color:#7a3226;background:#f8ece9;border-left-color:var(--red)}
 
 footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted);font-size:11px;text-align:center}
+
+.tkbtn{font-size:11px;font-weight:800;padding:5px 9px;border-radius:7px;background:var(--gold);color:#3a2708;border:1px solid var(--gold-deep)}
+.tkbtn:active{background:var(--gold-deep);color:#fff}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(16,41,74,.95);display:none;flex-direction:column}
+.lb.open{display:flex}
+.lb-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;color:#fff}
+.lb-top .lb-title{font-family:Georgia,serif;font-weight:700;font-size:15px}
+.lb-top .lb-count{font-size:12px;color:#cfe0f2;font-weight:700}
+.lb-close{background:none;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:8px;padding:5px 11px;font-size:13px;font-weight:800}
+.lb-stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;background:#fff;border-radius:6px}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);color:#10294a;border:none;width:44px;height:44px;border-radius:50%;font-size:24px;font-weight:800;line-height:1}
+.lb-prev{left:10px}.lb-next{right:10px}
+.lb-hint{text-align:center;color:#cfe0f2;font-size:11px;padding:7px 12px 11px}
 </style>
 </head>
 <body>
@@ -110,26 +124,40 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
 
 <footer class="pg">Portugal 2026 · installed to home screen · works offline</footer>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <div class="lb-top">
+    <span><span class="lb-title" id="lbTitle"></span> <span class="lb-count" id="lbCount"></span></span>
+    <button class="lb-close" onclick="closeTix()">Close ✕</button>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <button class="lb-nav lb-prev" onclick="tixNav(-1)" aria-label="Previous">‹</button>
+    <img id="lbImg" alt="Ticket — show at the gate">
+    <button class="lb-nav lb-next" onclick="tixNav(1)" aria-label="Next">›</button>
+  </div>
+  <div class="lb-hint">Swipe or tap ‹ › · show at the gate · works offline once loaded</div>
+</div>
+
+<script src="./tickets-data.js"></script>
 <script>
 const DAYS = [
 {id:"d0",date:"Fri Jul 24",loc:"Depart Boston",attire:"Layers for TAP's cool cabin overnight.",items:[
   {time:"10:45pm",status:"ok",title:"TAP TP216 → Lisbon",desc:"Red-eye. Ref YT74LQ.",links:[]}
 ]},
 {id:"d1",date:"Sat Jul 25",loc:"Sintra / Cascais",attire:"Sintra runs 5–9°F cooler/mistier than Lisbon. Layer for Monserrate; closed-toe shoes for Regaleira's well stairs. No hotel return today — dress for the whole day at once.",items:[
-  {time:"~11am",status:"ok",title:"Rental car pickup",desc:"BeRent/DiscoverCars #D014627141 · Škoda Superb wagon, 5 seats, paid €1,009.15. Physical license + passport required, credit card (not debit) in main driver's name.",links:[{t:"Lisbon Airport",u:"https://maps.google.com/?q=Lisbon+Airport"}]},
+  {time:"~11am",status:"ok",title:"Rental cars pickup (×2)",desc:"Two Škoda Superb wagons, both BeRent, both LIS ~11am. Car A #D014627141 (main driver: you). Car B #D014670075 (your sister's booking). Each driver brings: passport, physical license, and a credit card (not debit / not Apple-Google Pay) in that driver's own name.",links:[{t:"Lisbon Airport",u:"https://maps.google.com/?q=Lisbon+Airport"}],note:{warn:true,text:"BeRent accepts UK/EU licenses alone — a US license needs a physical International Driving Permit. Get it from AAA before you fly, or the desk can refuse the car."}},
   {time:"3pm",status:"ok",title:"Check in: Penha Longa Resort",desc:"Conf #74355170 · Estrada da Lagoa Azul, Linhó, Sintra 2714-511 · your family's room (2 adults, 1 child).",links:[{t:"Address",u:"https://maps.google.com/?q=Penha+Longa+Resort+Sintra"},{t:"Call",u:"tel:+351219249011"}]},
   {time:"~1pm",status:"ok",title:"Lunch: Arola",desc:"Penha Longa, on-site tapas.",links:[]},
-  {time:"2:15pm",status:"ok",title:"Monserrate Palace",desc:"Parques de Sintra #7653834 — ticket in packet.",links:[{t:"Address",u:"https://maps.google.com/?q=Monserrate+Palace+Sintra"}]},
+  {time:"2:15pm",status:"ok",title:"Monserrate Palace",desc:"Parques de Sintra #7653834 — tap Tickets below (9).",links:[{t:"Address",u:"https://maps.google.com/?q=Monserrate+Palace+Sintra"}],tickets:"monserrate"},
   {time:"4:30pm",status:"pending",title:"Quinta da Regaleira",desc:"Headout #32809972 · voucher exchange with City Lisbon Tours host (white t-shirt) at Fonte dos Pisões bus stop, arrive 15 min early.",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Fonte+dos+Pisoes+Sintra"},{t:"Pay now",u:"https://www.headout.com/en/payment/eNyoXq6iLnhMwqmY6GwJXUiTw15xp2gdSn2HDtHQikxvYRChuxZzKWHm3YA-BgNGPDc33FrOxUpVZoqMHsVDSA=="}],note:{warn:true,text:"Auto-charges $314.31 Thu Jul 23 4:30pm if not paid first"}},
   {time:"~6pm",status:"ok",title:"Cascais stroll",desc:"Real buffer built in — genuinely more time than it looks.",links:[]},
   {time:"8pm",status:"ok",title:"Dinner: Maré – José Avillez",desc:"Cascais · backup: Arola on-site.",links:[{t:"Menu",u:"https://marejoseavillez.pt/en/"}]}
 ]},
 {id:"d2",date:"Sun Jul 26",loc:"Sintra → Algarve",attire:"Pena's hilltop can be misty at 10:30am. Real walking shoes for the Moorish Castle. Swim gear packed for Pine Cliffs arrival.",items:[
   {time:"—",status:"ok",title:"Parking note",desc:"Private cars not allowed up to Pena/Moorish Castle. Park P1 Norte or free Portela de Sintra park-and-ride, shuttle/bus up.",links:[]},
-  {time:"10:30am",status:"ok",title:"Pena Palace, guided",desc:"Parques de Sintra ticket — in packet.",links:[{t:"Address",u:"https://maps.google.com/?q=Pena+Palace+Sintra"}]},
-  {time:"11:45am",status:"ok",title:"Moorish Castle",desc:"Same hillside, same shuttle. Ticket in packet.",links:[]},
+  {time:"10:30am",status:"ok",title:"Pena Palace, guided",desc:"Parques de Sintra — tap Tickets below (18: transfer + admission).",links:[{t:"Address",u:"https://maps.google.com/?q=Pena+Palace+Sintra"}],tickets:"pena"},
+  {time:"11:45am",status:"ok",title:"Moorish Castle",desc:"Same hillside, same shuttle. Tap Tickets below (9).",links:[],tickets:"moorish"},
   {time:"~1pm",status:"pending",title:"Lunch: Tábuas Honest Food",desc:"Sintra town · reservations fill fast, no email exists — Facebook message only. Cash/local cards preferred.",links:[{t:"Facebook",u:"https://www.facebook.com/tabuasfood/"}]},
-  {time:"1:45pm",status:"ok",title:"National Palace of Sintra",desc:"Self-guided, free audioguide app. Ticket in packet.",links:[]},
+  {time:"1:45pm",status:"ok",title:"National Palace of Sintra",desc:"Self-guided, free audioguide app. Tap Tickets below (9).",links:[],tickets:"sintra"},
   {time:"2:45pm",status:"ok",title:"Drive to Algarve",desc:"~3h drive.",links:[]},
   {time:"4pm",status:"ok",title:"Check in: Pine Cliffs Residence",desc:"Conf #75007164 · Praia da Falésia, Albufeira · 3-Bedroom Residence (2 Double + 2 Twin + 2 sofa beds).",links:[{t:"Address",u:"https://maps.google.com/?q=Pine+Cliffs+Resort+Albufeira"}]},
   {time:"7pm",status:"ok",title:"Dinner: O Pescador",desc:"On-property · confirmed, 9 people.",links:[]}
@@ -160,13 +188,13 @@ const DAYS = [
   {time:"7:30am",status:"ok",title:"Drive to Lisbon",desc:"~2h30m to Ajuda.",links:[]},
   {time:"10:30am",status:"ok",title:"Tile painting workshop",desc:"Galeria 1758, Cristina Cabrita · PAID · Tv. da Memória 47A, Ajuda. 3yo welcome.",links:[{t:"Address",u:"https://maps.google.com/?q=Tv.+da+Memoria+47A+Ajuda+Lisboa"},{t:"Call",u:"tel:+351915130289"}]},
   {time:"~1:30pm",status:"pending",title:"Lunch: Santa Restaurante & Bar",desc:"Alfama · reservations recommended.",links:[{t:"Site",u:"https://www.santalisboa.com/"},{t:"Call",u:"tel:+351218872359"}],note:{warn:false,text:"Quick-bite backup near the workshop: Jorge d'Amália, Calçada da Memória 20 (meat-only, not vegetarian-friendly)"}},
-  {time:"3pm",status:"ok",title:"Castelo de São Jorge + tuk-tuk",desc:"Live Portugal · €591.70 paid · meets at R. do Comércio. Castelo tickets (8) in packet, correct for 9 (12-and-under free).",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Rua+do+Comercio+Lisboa"},{t:"Call",u:"tel:+351912077956"}]},
+  {time:"3pm",status:"ok",title:"Castelo de São Jorge + tuk-tuk",desc:"Live Portugal · €591.70 paid · meets at R. do Comércio. Tap Tickets below (9: 4 adult, 4 child incl. the 12yo since 12-and-under is free, 1 senior). Covers all 9.",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Rua+do+Comercio+Lisboa"},{t:"Call",u:"tel:+351912077956"}],tickets:"castelo"},
   {time:"4pm",status:"ok",title:"Check in: Lisbon Marriott",desc:"Conf #74198853 · Jul 31–Aug 2, 2 nights · confirmed correct dates.",links:[{t:"Address",u:"https://maps.google.com/?q=Lisbon+Marriott+Hotel"}]},
   {time:"8pm",status:"ok",title:"Dinner: Taberna",desc:"Bairro do Avillez, Chiado · confirmed #7D9SH94RJS4T.",links:[{t:"Address",u:"https://maps.google.com/?q=Rua+Nova+da+Trindade+18+Lisboa"}]}
 ]},
 {id:"d8",date:"Sat Aug 1",loc:"Lisbon",attire:"Comfortable shoes for the food tour. Scarf for Jerónimos modesty hedge. No hotel return — start the day smart-casual for Fado/Páteo tonight.",items:[
   {time:"10:30am",status:"ok",title:"Private food tour",desc:"Eating Europe · confirmed #364766677 · meet Praça dos Restauradores.",links:[{t:"Meeting point",u:"https://maps.google.com/?q=Praca+dos+Restauradores+Lisboa"},{t:"Call",u:"tel:+19179096432"}]},
-  {time:"2:30pm",status:"ok",title:"Jerónimos Monastery",desc:"Order #38024877 · 9 tickets in packet · download link required, email alone won't scan.",links:[{t:"Address",u:"https://maps.google.com/?q=Praca+do+Imperio+Belem+Lisboa"},{t:"Tickets",u:"https://link.byblueticket.pt/Ticket/Get?id=38024877;74ltR9Xwe9HtoenAhQuhDTwagti6sOAf"}]},
+  {time:"2:30pm",status:"ok",title:"Jerónimos Monastery",desc:"Order #38024877 · tap Tickets below (9). Cached offline — no download link needed at the gate.",links:[{t:"Address",u:"https://maps.google.com/?q=Praca+do+Imperio+Belem+Lisboa"},{t:"Tickets",u:"https://link.byblueticket.pt/Ticket/Get?id=38024877;74ltR9Xwe9HtoenAhQuhDTwagti6sOAf"}],tickets:"jeronimos"},
   {time:"~4pm",status:"ok",title:"Pastéis de Belém + Comércio stroll",desc:"On the way back toward Chiado.",links:[]},
   {time:"6pm",status:"ok",title:"Lisboa em Fado",desc:"Confirmed LEF-T138722136 · Baixa/Chiado.",links:[]},
   {time:"8pm",status:"ok",title:"Dinner: Páteo",desc:"Bairro do Avillez, Chiado · confirmed #7D9KKY3J2KWJ.",links:[{t:"Address",u:"https://maps.google.com/?q=Rua+Nova+da+Trindade+18+Lisboa"}]}
@@ -190,7 +218,7 @@ function render(){
           <div class="row1"><span class="time">${it.time}</span><span class="status ${it.status}">${it.status==='ok'?'Set':'Open'}</span></div>
           <h3>${it.title}</h3>
           <div class="desc">${it.desc}</div>
-          ${it.links.length?`<div class="linkrow">${it.links.map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`).join('')}</div>`:''}
+          ${(it.links.length||it.tickets)?`<div class="linkrow">${it.links.map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`).join('')}${it.tickets?`<button class="tkbtn" data-t="${it.title.replace(/"/g,'&quot;')}" onclick="openTix('${it.tickets}',this.dataset.t)">🎫 Tickets (${((window.TICKETS||{})[it.tickets]||[]).length})</button>`:''}</div>`:''}
           ${it.note?`<div class="note ${it.note.warn?'warn':''}">${it.note.text}</div>`:''}
         </div>
       `).join('')}
@@ -198,6 +226,29 @@ function render(){
   `).join('');
 }
 render();
+
+let TIX=[],TIXi=0;
+function openTix(key,title){
+  TIX=((window.TICKETS||{})[key])||[];
+  if(!TIX.length){alert('Tickets are still loading — connect to WiFi once to cache them, then reopen.');return;}
+  TIXi=0;
+  document.getElementById('lbTitle').textContent=title||'Tickets';
+  showTix();
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function showTix(){
+  document.getElementById('lbImg').src=TIX[TIXi];
+  document.getElementById('lbCount').textContent=(TIXi+1)+' / '+TIX.length;
+}
+function tixNav(d){ if(!TIX.length)return; TIXi=(TIXi+d+TIX.length)%TIX.length; showTix(); }
+function closeTix(){ document.getElementById('lb').classList.remove('open'); document.getElementById('lbImg').src=''; document.body.style.overflow=''; }
+(function(){
+  let x0=null;
+  document.addEventListener('touchstart',function(e){ if(document.getElementById('lb').classList.contains('open')) x0=e.touches[0].clientX; },{passive:true});
+  document.addEventListener('touchend',function(e){ if(x0===null)return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) tixNav(dx<0?1:-1); x0=null; },{passive:true});
+  document.addEventListener('keydown',function(e){ if(!document.getElementById('lb').classList.contains('open'))return; if(e.key==='Escape')closeTix(); else if(e.key==='ArrowRight')tixNav(1); else if(e.key==='ArrowLeft')tixNav(-1); });
+})();
 
 function updateNet(){
   const dot = document.getElementById('netdot');

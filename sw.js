@@ -1,11 +1,12 @@
-const CACHE = 'pt2026-v1';
+const CACHE = 'pt2026-v2';
 const ASSETS = [
   './itinerary.html',
   './planner.html',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './tickets-data.js'
 ];
 
 self.addEventListener('install', (event) => {
