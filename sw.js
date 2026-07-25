@@ -2,7 +2,7 @@
 //  APP  — versioned. Bump APP_CACHE to push any content/code change to phones.
 //  DATA — unversioned and never purged. Holds the 12.3MB ticket payload so a
 //         content update does NOT force every phone to re-download it.
-const APP_CACHE  = 'pt2026-app-v4';
+const APP_CACHE  = 'pt2026-app-v5';
 const DATA_CACHE = 'pt2026-data-v1';
 
 const APP_CORE = [

@@ -113,6 +113,8 @@ footer.pg{max-width:640px;margin:20px auto 40px;padding:0 12px;color:var(--muted
 .todaytag{display:inline-block;background:var(--gold);color:#3a2708;font-size:9.5px;font-weight:800;
   padding:2px 7px;border-radius:999px;margin-left:7px;text-transform:uppercase;letter-spacing:.05em}
 nav.daynav a.is-today{background:var(--gold);border-color:var(--gold-deep);color:#3a2708}
+nav.daynav a.is-active{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:800}
+nav.daynav a.is-today.is-active{background:var(--gold);border-color:var(--gold-deep);color:#3a2708;box-shadow:0 0 0 2px rgba(21,53,94,.35)}
 
 .openbox summary{font-size:13px;font-weight:800;color:#8a5a13;cursor:pointer;list-style:none}
 .openbox summary::-webkit-details-marker{display:none}
@@ -194,7 +196,7 @@ const DAYS = [
   {time:"10:45pm",status:"ok",title:"TAP TP216 → Lisbon",desc:"Red-eye. Ref YT74LQ.",links:[]}
 ]},
 {id:"d1",date:"Sat Jul 25",loc:"Sintra / Cascais",attire:"Sintra runs 5–9°F cooler/mistier than Lisbon. Layer for Monserrate; closed-toe shoes for Regaleira's well stairs. No hotel return today — dress for the whole day at once.",items:[
-  {time:"~11am",status:"ok",title:"Rental cars pickup (×2)",desc:"Two Škoda Superb wagons, both BeRent, both LIS ~11am. Car A #D014627141 (main driver: you). Car B #D014670075 (your sister's booking). Each driver brings: passport, physical license, and a credit card (not debit / not Apple-Google Pay) in that driver's own name.",links:[{t:"Lisbon Airport",u:"https://maps.google.com/?q=Lisbon+Airport"}],note:{warn:true,text:"BeRent accepts UK/EU licenses alone — a US license needs a physical International Driving Permit. Get it from AAA before you fly, or the desk can refuse the car."}},
+  {time:"~11am",status:"ok",title:"Rental cars pickup (×2) — shuttle, no desk at the airport",desc:"Two Škoda Superb wagons, both BeRent. Car A #D014627141 (main driver: you). Car B #D014670075 — the voucher names Soumya Nyshadham as main driver, but ARIE RANGARAJ will drive; confirm the change with BeRent before pickup. BeRent confirmed Jul 24 there is NO agent at the meeting point. Procedure: (1) collect bags, (2) call +351 262 077 098 and press 2, (3) go to Exit 4, Terminal 1 — the door next to the Vodafone shop — and wait on the SECOND sidewalk, (4) their shuttle takes you to the station — it is only 2.2km / about 5 minutes away, in Portela. Each driver brings: passport, physical license, physical IDP, and a credit card (not debit / not Apple-Google Pay) in that driver's own name.",links:[{t:"Meeting point (Exit 4, T1)",u:"https://maps.google.com/?q=Lisbon+Airport+Terminal+1+Exit+4"},{t:"Shuttle tracker",u:"https://tinyurl.com/Berent-shuttle"},{t:"BeRent station",u:"https://maps.google.com/?q=Rua+Vasco+da+Gama+7A+Portela+2685-244+Lisboa"},{t:"Call BeRent",u:"tel:+351262077098"}],note:{warn:true,text:"Every driver needs their own physical IDP — BeRent accepts UK/EU licences unaccompanied, all others require one. The credit card must be in that car's named main driver's name. No agent meets you; the call is how the shuttle is summoned (WhatsApp calls not accepted, chat only). Timing is not tight: TP216 lands ~10:20, the car is held an hour past the 11:00 slot, BeRent holds the flight number, and the voucher allows agreeing an extension if passport control runs long."}},
   {time:"3pm",status:"ok",title:"Check in: Penha Longa Resort",desc:"Conf #74355170 · Estrada da Lagoa Azul, Linhó, Sintra 2714-511 · your family's room (2 adults, 1 child).",links:[{t:"Address",u:"https://maps.google.com/?q=Penha+Longa+Resort+Sintra"},{t:"Call",u:"tel:+351219249011"}]},
   {time:"~1pm",status:"ok",title:"Lunch: Arola",desc:"Penha Longa, on-site tapas.",links:[]},
   {time:"2:15pm",status:"ok",title:"Monserrate Palace",desc:"Parques de Sintra #7653834 — tap Tickets below (9).",links:[{t:"Address",u:"https://maps.google.com/?q=Monserrate+Palace+Sintra"}],tickets:"monserrate"},
@@ -250,7 +252,7 @@ const DAYS = [
   {time:"8pm",status:"ok",title:"Dinner: Páteo",desc:"Bairro do Avillez, Chiado · confirmed #7D9KKY3J2KWJ.",links:[{t:"Address",u:"https://maps.google.com/?q=Rua+Nova+da+Trindade+18+Lisboa"}]}
 ]},
 {id:"d9",date:"Sun Aug 2",loc:"Depart",attire:"Comfortable travel clothes — daytime flight.",items:[
-  {time:"—",status:"ok",title:"Return both rental cars",desc:"Lisbon Airport, by 11am.",links:[]},
+  {time:"8:00am",status:"pending",title:"Return rental cars — BeRent STATION, not the airport",desc:"Drop-off is at the BeRent station (Rua Vasco da Gama Nº7A, Portela) — 2.2km / about 5 minutes from the terminal — then their shuttle brings you back. THE STATION OPENS AT 8:00AM, so that is the earliest possible drop, not a target. Arrive 8:00–8:15am, shuttle back, and you are at Terminal 1 by roughly 8:30am — about 3 hours before an 11:55am departure. Car B is booked until 3:00pm — that only matters if its group is on a later flight; if everyone is on the same morning flight, both cars go back together.",links:[{t:"BeRent station",u:"https://maps.google.com/?q=Rua+Vasco+da+Gama+7A+Portela+2685-244+Lisboa"},{t:"Shuttle tracker",u:"https://tinyurl.com/Berent-shuttle"},{t:"Call BeRent",u:"tel:+351262077098"}],note:{warn:true,text:"Ask BeRent at Jul 25 pickup to confirm the Aug 2 return time and how the shuttle back is summoned — your voucher tells you to clarify drop-off instructions then. Do not plan on using the car past ~7:30am that morning."}},
   {time:"11:55am",status:"ok",title:"TAP → Boston",desc:"Ref YT74LQ, lands 2:40pm.",links:[]}
 ]}
 ];
@@ -286,6 +288,41 @@ var TODAY_ID=(function(){
 
 render();
 if(TODAY_ID){ setTimeout(function(){ var el=document.getElementById(TODAY_ID); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); },400); }
+
+// ---- day-nav scroll-spy: pill follows the day you're actually looking at ----
+(function(){
+  var nav=document.querySelector('nav.daynav'); if(!nav) return;
+  var links={}, ids=[];
+  nav.querySelectorAll('a').forEach(function(a){
+    var id=a.getAttribute('href').slice(1); links[id]=a; ids.push(id);
+  });
+  var activeId=null;
+  function setActive(id){
+    if(!id||id===activeId||!links[id]) return;
+    activeId=id;
+    ids.forEach(function(k){ links[k].classList.toggle('is-active', k===id); });
+    var a=links[id];
+    nav.scrollTo({left:Math.max(0, a.offsetLeft - nav.clientWidth/2 + a.clientWidth/2), behavior:'smooth'});
+  }
+  function currentId(){
+    var cut=nav.getBoundingClientRect().bottom+8, best=ids[0], bestTop=-1e9;
+    ids.forEach(function(k){
+      var el=document.getElementById(k); if(!el) return;
+      var t=el.getBoundingClientRect().top-cut;
+      if(t<=0&&t>bestTop){ bestTop=t; best=k; }
+    });
+    return best;
+  }
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(function(){ setActive(currentId()); ticking=false; });
+  },{passive:true});
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){ setActive(a.getAttribute('href').slice(1)); });
+  });
+  setActive(currentId());
+})();
 
 function toast(msg){
   var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
